@@ -6,6 +6,8 @@
 
 package steg;
 
+import View.Login;
+
 /**
  *
  * @author Jithinpv
@@ -17,6 +19,9 @@ public class Steg {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Login login = new Login();
+        login.setVisible(true);
+        
     }
     
 }
