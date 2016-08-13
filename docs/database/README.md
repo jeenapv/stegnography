@@ -4,14 +4,10 @@
 ```sh
 mysql -u root -p
 <enter your password>
-```
-
-* create database stegnography;
-
-* exit from database using command :
-```sh
+create database stegnography;
 exit
 ```
+
 * Copy the dump file (stegnography.txt) to desktop
 
 * Open command prompt and enter following commands :
