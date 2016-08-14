@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author Jithinpv
  */
 public class Login extends javax.swing.JFrame {
-
+    public static int logged_in_user_id=1;
     /**
      * Creates new form Login
      */
@@ -126,6 +126,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         String userName=jTextField1.getText();
         String password=new String(jPasswordField1.getPassword());
         if(userName.equals(""))
@@ -139,6 +140,8 @@ public class Login extends javax.swing.JFrame {
         ResultSet rs = dbcon.select("select * from tbl_user_details where user_name='"+userName+"' and password='"+password+"'");
         try{
             if(rs.next()){
+                String id=rs.getString("user_id");
+                logged_in_user_id= Integer.parseInt(id);
                  this.dispose();
                 Home home=new Home();
                 home.setVisible(true);

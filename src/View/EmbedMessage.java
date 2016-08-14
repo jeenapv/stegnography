@@ -5,10 +5,15 @@
  */
 package View;
 
+import db.Dbcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -19,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Jithinpv
  */
 public class EmbedMessage extends javax.swing.JFrame {
+     public static int process_id=0;
 
     /**
      * Creates new form EmbedMessage
@@ -26,6 +32,8 @@ public class EmbedMessage extends javax.swing.JFrame {
     public EmbedMessage() {
         initComponents();
         this.setLocationRelativeTo(null);
+       
+        
     }
 
     /**
@@ -45,6 +53,7 @@ public class EmbedMessage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         image_name = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,37 +87,43 @@ public class EmbedMessage extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("PROCEED");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 50, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(166, 166, 166)
-                                    .addComponent(jLabel4))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(134, 134, 134)
-                                    .addComponent(image_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(134, 134, 134)
+                                .addComponent(image_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,12 +138,13 @@ public class EmbedMessage extends javax.swing.JFrame {
                 .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(image_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
                     .addComponent(jButton2)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton3))
-                .addGap(52, 52, 52))
+                    .addComponent(jButton4)
+                    .addComponent(jLabel3))
+                .addGap(44, 44, 44))
         );
 
         pack();
@@ -136,12 +152,22 @@ public class EmbedMessage extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        MessageEncryption messageEncryption = new MessageEncryption();
-        messageEncryption.setVisible(true);
+        store_analyse_masterfile();
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void store_analyse_masterfile(){
+        Dbcon dbcon=new Dbcon();
+        String sql="update tbl_encryption_log set analyze_started_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedMessage.process_id+"'";
+        System.out.println(sql);
+        dbcon.update(sql);
+        
+    }
+    
+    
+    
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -171,9 +197,34 @@ public class EmbedMessage extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            long size=(chooser.getSelectedFile().length())/1024;
+            
+            Dbcon dbcon=new Dbcon();
+            int ins=dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size)values('"+Login.logged_in_user_id+"','"+path+"','"+size+"')");
+            if(ins>0){
+              ResultSet rs= dbcon.select("select max(process_id)  from tbl_encryption_log");
+                try {
+                    if(rs.next()){
+                       System.out.println(rs.getString(1));
+                       EmbedMessage.process_id=Integer.parseInt(rs.getString(1));
+                       System.out.println(EmbedMessage.process_id);
+                       
+                    } 
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                
+            }
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        MessageEncryption messageEncryption = new MessageEncryption();
+        messageEncryption.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +267,7 @@ public class EmbedMessage extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
