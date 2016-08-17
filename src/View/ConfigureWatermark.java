@@ -127,6 +127,10 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String text=jTextField1.getText();
+        String position=jComboBox1.getSelectedItem().toString();
+        String color=jComboBox2.getSelectedItem().toString();
+        
         this.dispose();
         Home home=new Home();
         home.setVisible(true);

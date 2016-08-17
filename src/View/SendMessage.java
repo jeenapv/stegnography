@@ -6,6 +6,8 @@
 
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jithinpv
@@ -56,6 +58,11 @@ public class SendMessage extends javax.swing.JFrame {
         jLabel6.setText("Enter Reciever Email id");
 
         jButton1.setText("SEND");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,6 +121,23 @@ public class SendMessage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String receiverName=jTextField1.getText();
+        String receiverMail=jTextField2.getText();
+        if(receiverName.equals(""))
+        {
+            JOptionPane.showMessageDialog(rootPane, "Enter receiver name");
+        }
+        else if(receiverMail.equals(""))
+        {
+             JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
+        }else
+        {
+            JOptionPane.showMessageDialog(rootPane, "success");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

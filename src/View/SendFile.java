@@ -6,6 +6,8 @@
 
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jithinpv
@@ -56,6 +58,11 @@ public class SendFile extends javax.swing.JFrame {
         jLabel6.setText("Enter reciever Email id");
 
         jButton1.setText("SEND");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,7 +91,7 @@ public class SendFile extends javax.swing.JFrame {
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(249, 249, 249)
+                        .addGap(206, 206, 206)
                         .addComponent(jButton1)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -111,13 +118,30 @@ public class SendFile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(40, 40, 40))
+                .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String receiverName=jTextField1.getText();
+        String receiverMail=jTextField2.getText();
+        if(receiverName.equals(""))
+        {
+            JOptionPane.showMessageDialog(rootPane, "Enter receiver name");
+        }
+        else if(receiverMail.equals(""))
+        {
+             JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
+        }else
+        {
+            JOptionPane.showMessageDialog(rootPane, "success");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

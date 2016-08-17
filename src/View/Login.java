@@ -132,8 +132,8 @@ public class Login extends javax.swing.JFrame {
         if(userName.equals(""))
         {
             JOptionPane.showMessageDialog(rootPane, "Enter username");
-        }
-        if(password.equals("")){
+        }else if(password.equals("")){
+        
             JOptionPane.showMessageDialog(rootPane, "Enter password");
         }else{
          Dbcon dbcon = new Dbcon();

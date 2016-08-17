@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import db.Dbcon;
@@ -79,6 +78,11 @@ public class Registration extends javax.swing.JFrame {
         });
 
         jButton2.setText("CLEAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         genderGroup.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -200,52 +204,64 @@ public class Registration extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        String firstname=jTextField2.getText();
-        String lastname=jTextField3.getText();
+
+        String firstname = jTextField2.getText();
+        String lastname = jTextField3.getText();
         Date selectedDate = jXDatePicker2.getDate();
 //        String millisecond = selectedDate.getTime() + "";
-        String gender_male=jRadioButton1.getText();
-        String gender_female=jRadioButton2.getText();
-        String email=jTextField6.getText();
-        String phonenumber=jTextField5.getText();
-        String username=jTextField4.getText();
-        String password=jTextField7.getText();
-        if(firstname.equals("")){
-            
+        String gender_male = jRadioButton1.getText();
+        String gender_female = jRadioButton2.getText();
+        String email = jTextField6.getText();
+        String phonenumber = jTextField5.getText();
+        String username = jTextField4.getText();
+        String password = jTextField7.getText();
+        if (firstname.equals("")) {
+
             JOptionPane.showMessageDialog(rootPane, "Enter your first name");
-        }else if(lastname.equals("")){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter your last name");
-        }else if(selectedDate==null){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter the date");
-        }else if(email.equals("")){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter the email");
-        }else if(phonenumber.equals("")){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter the phone number");
-        }else if(username.equals("")){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter the username");
-        }else if(password.equals("")){
-            
-             JOptionPane.showMessageDialog(rootPane, "Enter the password");
-        }else{
-            Dbcon dbcon=new Dbcon();
-            int ins=dbcon.insert("insert into tbl_user_details(user_name,first_name,last_name,gender,date_of_birth,email_id,phone_number,password,created_at,last_updated_at)values('"+username+"','"+firstname+"','"+lastname+"','"+gender_male+"','"+selectedDate+"','"+email+"','"+phonenumber+"','"+password+"','"+System.currentTimeMillis()+"','"+System.currentTimeMillis()+"')");
-            if(ins>0){
-              this.dispose();
-              Home home=new Home();
-              home.setVisible(true);
-             }
-            else {
+        } else if (lastname.equals("")) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter your last name");
+        } else if (selectedDate == null) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter the date");
+        } else if (email.equals("")) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter the email");
+        } else if (phonenumber.equals("")) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter the phone number");
+        } else if (username.equals("")) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter the username");
+        } else if (password.equals("")) {
+
+            JOptionPane.showMessageDialog(rootPane, "Enter the password");
+        } else {
+            Dbcon dbcon = new Dbcon();
+            int ins = dbcon.insert("insert into tbl_user_details(user_name,first_name,last_name,gender,date_of_birth,email_id,phone_number,password,created_at,last_updated_at)values('" + username + "','" + firstname + "','" + lastname + "','" + gender_male + "','" + selectedDate + "','" + email + "','" + phonenumber + "','" + password + "','" + System.currentTimeMillis() + "','" + System.currentTimeMillis() + "')");
+            if (ins > 0) {
+                this.dispose();
+                Home home = new Home();
+                home.setVisible(true);
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "try again");
             }
-        } 
-       
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextField2.setText("");
+        jTextField3.setText("");
+        //jXDatePicker2.setTimeZone(null);
+        //jRadioButton1.setText("");
+        // jRadioButton2.setText("");
+        jTextField6.setText("");
+        jTextField5.setText("");
+        jTextField4.setText("");
+        jTextField7.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
