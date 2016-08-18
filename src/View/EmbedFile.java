@@ -3,19 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
+import db.Dbcon;
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Jithinpv
  */
 public class EmbedFile extends javax.swing.JFrame {
-
+public static int process_id=0;
     /**
      * Creates new form EmbedFile
      */
@@ -41,6 +49,7 @@ public class EmbedFile extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +84,13 @@ public class EmbedFile extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("PROCEED");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,27 +101,30 @@ public class EmbedFile extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
                                 .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton4))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(78, 78, 78)
                                 .addComponent(jButton1))))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(156, 156, 156)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
+                                .addGap(102, 102, 102)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(27, 27, 27))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(78, 78, 78)
+                            .addComponent(jButton2)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,15 +135,21 @@ public class EmbedFile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
                     .addComponent(jButton2)
                     .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addGap(39, 39, 39))
         );
 
@@ -133,36 +158,72 @@ public class EmbedFile extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        FileEncryption fileEncryption=new FileEncryption();
-        fileEncryption.setVisible(true);
+        store_analyse_masterfile(); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+      public void store_analyse_masterfile(){
+        Dbcon dbcon=new Dbcon();
+        String sql="update tbl_encryption_log set analyze_started_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedFile.process_id+"'";
+        System.out.println(sql);
+        dbcon.update(sql);
+        
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-         this.dispose();
-        Home home=new Home();
+        this.dispose();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog((Component)evt.getSource());
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = chooser.getSelectedFile();
-        try {
-            String fileName = file.toString();
-            String name=chooser.getSelectedFile().getName();
-            jLabel5.setText(name);
-        } catch (Exception ex) {
-          System.out.println("problem accessing file"+file.getAbsolutePath());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & GIF Images", "jpg", "gif");
+
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String path=chooser.getSelectedFile().getPath();
+            jLabel2.setText(chooser.getSelectedFile().getName());
+            System.out.println("You chose to open this file: "
+                    + path);
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(path));
+                Image scaledInstance = img.getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(scaledInstance);
+                jLabel2.setIcon(imageIcon);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            long size=(chooser.getSelectedFile().length())/1024;
+            
+            Dbcon dbcon=new Dbcon();
+            int ins=dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size)values('"+Login.logged_in_user_id+"','"+path+"','"+size+"')");
+            if(ins>0){
+              ResultSet rs= dbcon.select("select max(process_id)  from tbl_encryption_log");
+                try {
+                    if(rs.next()){
+                       System.out.println(rs.getString(1));
+                       EmbedFile.process_id=Integer.parseInt(rs.getString(1));
+                       System.out.println(EmbedFile.process_id);
+                       
+                    } 
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
-    } 
-    else {
-        System.out.println("File access cancelled by user.");
-    }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        FileEncryption fileEncryption = new FileEncryption();
+        fileEncryption.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +264,7 @@ public class EmbedFile extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

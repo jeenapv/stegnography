@@ -134,6 +134,7 @@ public class MessageEncryption extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Enter message");
         } else {
             Dbcon dbcon=new Dbcon();
+            dbcon.update("update tbl_encryption_log set encryption_start_time='"+System.currentTimeMillis()+"'where process_id='"+EmbedMessage.process_id+"'");
             //dbcon.insert("insert into tbl_encryption_log(encryption_start_time)values('"+System.currentTimeMillis()+"')");
             dbcon.insert("insert into tbl_transfer_log(password)values('"+password+"')");
             encryption_password=password;
@@ -154,6 +155,12 @@ public class MessageEncryption extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Dbcon dbcon=new Dbcon();
+        dbcon.update("update tbl_encryption_log set water_mark_start_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedMessage.process_id+"'");
+                
+        this.dispose();
+        ViewWaterMark viewWaterMark=new ViewWaterMark();
+        viewWaterMark.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

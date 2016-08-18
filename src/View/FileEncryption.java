@@ -60,6 +60,11 @@ public class FileEncryption extends javax.swing.JFrame {
         jLabel3.setText("Maximum file size");
 
         jButton2.setText("Add Watermark");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Encrypt");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +142,7 @@ public class FileEncryption extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Choose file to be encrypted");
         } else {
             Dbcon dbcon = new Dbcon();
-           // dbcon.insert("insert into tbl_encryption_log(encryption_start_time)values('"+System.currentTimeMillis()+"')");
+           dbcon.update("update tbl_encryption_log set encryption_start_time='"+System.currentTimeMillis()+"'where process_id='"+EmbedFile.process_id+"'");
             dbcon.insert("insert into tbl_transfer_log(password)values('" + password + "')");
             enc_password=password;
             this.dispose();
@@ -171,6 +176,16 @@ public class FileEncryption extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Dbcon dbcon=new Dbcon();
+        dbcon.update("update tbl_encryption_log set water_mark_start_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedFile.process_id+"'");
+                
+        this.dispose();
+        ViewWaterMark viewWaterMark=new ViewWaterMark();
+        viewWaterMark.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
