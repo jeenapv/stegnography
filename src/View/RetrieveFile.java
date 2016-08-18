@@ -6,6 +6,7 @@
 
 package View;
 
+import General.Configuration;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -23,7 +24,11 @@ public class RetrieveFile extends javax.swing.JFrame {
     public RetrieveFile() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
     }
+      private void loadIcons() {
+        Configuration.setIconOnLabel("file.png", jLabel3);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -6,6 +6,8 @@
 
 package View;
 
+import General.Configuration;
+
 /**
  *
  * @author Jithinpv
@@ -18,6 +20,18 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
+    }
+    
+    private void loadIcons() {
+        Configuration.setIconOnLabel("configure.png", jLabel3);
+        Configuration.setIconOnLabel("embedmsg.png", jLabel1);
+        Configuration.setIconOnLabel("embedfile.png", jLabel5);
+        Configuration.setIconOnLabel("retreivemsg.png", jLabel7);
+        Configuration.setIconOnLabel("retrievefile2.png", jLabel9);
+        Configuration.setIconOnLabel("inbox.png", jLabel11);
+        Configuration.setIconOnLabel("help.png", jLabel13);
+        Configuration.setIconOnLabel("lock.png", jLabel15);
     }
 
     /**
@@ -49,6 +63,11 @@ public class Home extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jithinpv\\Documents\\NetBeansProjects\\stegnography\\images\\embedmsg.png")); // NOI18N
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -291,6 +310,10 @@ public class Home extends javax.swing.JFrame {
         Login login=new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

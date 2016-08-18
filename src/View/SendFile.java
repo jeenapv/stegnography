@@ -6,6 +6,7 @@
 
 package View;
 
+import General.Configuration;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +21,11 @@ public class SendFile extends javax.swing.JFrame {
     public SendFile() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
     }
+     private void loadIcons() {
+        Configuration.setIconOnLabel("file.png", jLabel1);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,7 +112,7 @@ public class SendFile extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(50, 50, 50)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)

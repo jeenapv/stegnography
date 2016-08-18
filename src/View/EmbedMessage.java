@@ -5,6 +5,7 @@
  */
 package View;
 
+import General.Configuration;
 import db.Dbcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -32,9 +33,13 @@ public class EmbedMessage extends javax.swing.JFrame {
     public EmbedMessage() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
        
         
     }
+      private void loadIcons() {
+        Configuration.setIconOnLabel("msg.png", image_Label);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -6,6 +6,7 @@
 
 package View;
 
+import General.Configuration;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +21,11 @@ public class SendMessage extends javax.swing.JFrame {
     public SendMessage() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadIcons();
     }
+     private void loadIcons() {
+        Configuration.setIconOnLabel("msg.png", jLabel1);
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
