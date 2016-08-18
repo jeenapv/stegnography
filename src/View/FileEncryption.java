@@ -5,6 +5,7 @@
  */
 package View;
 
+import db.Dbcon;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Jithinpv
  */
 public class FileEncryption extends javax.swing.JFrame {
-
+    public static String enc_password;
     /**
      * Creates new form FileEncryption
      */
@@ -135,6 +136,10 @@ public class FileEncryption extends javax.swing.JFrame {
         } else if (fileName.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Choose file to be encrypted");
         } else {
+            Dbcon dbcon = new Dbcon();
+           // dbcon.insert("insert into tbl_encryption_log(encryption_start_time)values('"+System.currentTimeMillis()+"')");
+            dbcon.insert("insert into tbl_transfer_log(password)values('" + password + "')");
+            enc_password=password;
             this.dispose();
             SendFile sendFile = new SendFile();
             sendFile.setVisible(true);

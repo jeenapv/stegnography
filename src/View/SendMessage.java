@@ -7,6 +7,11 @@
 package View;
 
 import General.Configuration;
+import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -140,7 +145,18 @@ public class SendMessage extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
         }else
         {
-            JOptionPane.showMessageDialog(rootPane, "success");
+            Dbcon dbcon = new Dbcon();
+            ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='"+receiverMail+"'");
+            try {
+                if (rs.next()) {
+                    String receiver_id=rs.getString(1);
+                    dbcon.update("update tbl_transfer_log set sender_id='"+Login.logged_in_user_id+"',receiver_id='"+receiver_id +"',transfer_date='"+System.currentTimeMillis()+"',is_send=1 where password='"+MessageEncryption.encryption_password+"'");
+                    JOptionPane.showMessageDialog(rootPane, "success");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+           
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

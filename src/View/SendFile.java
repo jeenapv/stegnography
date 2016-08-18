@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
+import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,9 +27,10 @@ public class SendFile extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
-     private void loadIcons() {
+
+    private void loadIcons() {
         Configuration.setIconOnLabel("file.png", jLabel1);
-      }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,18 +138,25 @@ public class SendFile extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String receiverName=jTextField1.getText();
-        String receiverMail=jTextField2.getText();
-        if(receiverName.equals(""))
-        {
+        String receiverName = jTextField1.getText();
+        String receiverMail = jTextField2.getText();
+        if (receiverName.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter receiver name");
-        }
-        else if(receiverMail.equals(""))
-        {
-             JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
-        }else
-        {
-            JOptionPane.showMessageDialog(rootPane, "success");
+        } else if (receiverMail.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
+        } else {
+            Dbcon dbcon = new Dbcon();
+            ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='" + receiverMail + "'");
+            try {
+                if (rs.next()) {
+                    String receiver_id=rs.getString(1);
+                    dbcon.update("update tbl_transfer_log set sender_id='"+Login.logged_in_user_id + "',receiver_id='"+receiver_id+"',transfer_date='"+System.currentTimeMillis()+"',is_send=1 where password='"+FileEncryption.enc_password+"'");
+                    JOptionPane.showMessageDialog(rootPane, "success");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SendFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

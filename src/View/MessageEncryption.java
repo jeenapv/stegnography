@@ -5,6 +5,7 @@
  */
 package View;
 
+import db.Dbcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Jithinpv
  */
 public class MessageEncryption extends javax.swing.JFrame {
-
+    public static String encryption_password;
     /**
      * Creates new form Encryption
      */
@@ -53,6 +54,11 @@ public class MessageEncryption extends javax.swing.JFrame {
         jLabel3.setText("Characters left   :  20");
 
         jButton1.setText("Add Watermark");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Encrypt");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -107,10 +113,11 @@ public class MessageEncryption extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton3)))
                 .addGap(50, 50, 50))
         );
 
@@ -126,9 +133,14 @@ public class MessageEncryption extends javax.swing.JFrame {
         } else if (message.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter message");
         } else {
+            Dbcon dbcon=new Dbcon();
+            //dbcon.insert("insert into tbl_encryption_log(encryption_start_time)values('"+System.currentTimeMillis()+"')");
+            dbcon.insert("insert into tbl_transfer_log(password)values('"+password+"')");
+            encryption_password=password;
             this.dispose();
             SendMessage send = new SendMessage();
             send.setVisible(true);
+            
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -139,6 +151,10 @@ public class MessageEncryption extends javax.swing.JFrame {
         EmbedMessage embedMessage = new EmbedMessage();
         embedMessage.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
