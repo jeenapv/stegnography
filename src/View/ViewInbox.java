@@ -6,6 +6,10 @@
 
 package View;
 
+import db.Dbcon;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Jithinpv
@@ -37,6 +41,11 @@ public class ViewInbox extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("SEARCH");
 
@@ -119,6 +128,23 @@ public class ViewInbox extends javax.swing.JFrame {
         Home home=new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        // Dbcon dbcon = new Dbcon();
+       // DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+        //try {
+
+        //    ResultSet rs = dbcon.select("select * from tbl_transfer_log order by transfer_id desc");
+         //   while (rs.next()) {
+          //      dt.addRow(new String[]{ rs.getString(1)});
+          //  }
+         //   jTable1.setModel(dt);
+
+       // } catch (Exception e) {
+          //  e.printStackTrace();
+      //  }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
