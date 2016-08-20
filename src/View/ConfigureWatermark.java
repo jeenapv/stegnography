@@ -6,6 +6,7 @@
 package View;
 
 import db.Dbcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,9 +54,9 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
         jLabel2.setText("Font size");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "violet", "indogo", "blue", "green", "yellow", "orange", "red" }));
 
         jLabel3.setText("Font Color");
 
@@ -83,7 +84,7 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
         jLabel8.setText("Template Name");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "tahoma", "arial", "gothik" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,7 +181,7 @@ public class ConfigureWatermark extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String title = jTextField1.getText();
-        String template=jTextField2.getText();
+        String template = jTextField2.getText();
         String size = jComboBox1.getSelectedItem().toString();
         String color = jComboBox2.getSelectedItem().toString();
         String family = jComboBox3.getSelectedItem().toString();
@@ -188,9 +189,21 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
         Dbcon dbcon = new Dbcon();
 
-        dbcon.insert("insert into tbl_water_mark_config(template_name,title,font_family,font_size,font_color,opacity)values('"+template+"','"+title+"','"+family+"','"+size+"','"+color+"','"+opacity+"')");
+        int ins = dbcon.insert("insert into tbl_water_mark_config(template_name,title,font_family,font_size,font_color,opacity)values('" + template + "','" + title + "','" + family + "','" + size + "','" + color + "','" + opacity + "')");
+        if (ins > 0) {
+            JOptionPane.showMessageDialog(rootPane, "Sucessfully added template : " + template);
+            ViewWaterMark viewWaterMark = new ViewWaterMark();
+            viewWaterMark.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Internal error, please try again after some time");
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void clearAll() {
+        
+    }
 
     /**
      * @param args the command line arguments
@@ -221,12 +234,12 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new ConfigureWatermark().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
