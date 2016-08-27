@@ -371,79 +371,67 @@ public class Steganograph {
         return true;
     }
 
-    public static boolean retrieveFile(SteganoInformation info, String password, boolean overwrite) {
+    public static boolean retrieveFile(SteganoInformation info, String password, boolean overwrite) throws Exception {
         File dataFile = null;
         features = info.getFeatures();
+        masterFile = info.getFile();
+        byteArrayIn = new byte[(int) masterFile.length()];
 
-        try {
-            masterFile = info.getFile();
-            byteArrayIn = new byte[(int) masterFile.length()];
+        DataInputStream in = new DataInputStream(new FileInputStream(masterFile));
+        in.read(byteArrayIn, 0, (int) masterFile.length());
+        in.close();
 
-            DataInputStream in = new DataInputStream(new FileInputStream(masterFile));
-            in.read(byteArrayIn, 0, (int) masterFile.length());
-            in.close();
+        messageSize = info.getDataLength();
+        byte[] fileArray = new byte[messageSize];
+        inputOutputMarker = info.getInputMarker();
+        readBytes(fileArray);
 
-            messageSize = info.getDataLength();
-            byte[] fileArray = new byte[messageSize];
-            inputOutputMarker = info.getInputMarker();
-            readBytes(fileArray);
-
-            if (messageSize <= 0) {
-                message = "Unexpected size of embedded file: 0.";
-                return false;
-            }
-
-
-            if (features == CEF || features == UEF) {
-                password = password.substring(0, 8);
-                byte passwordBytes[] = password.getBytes();
-                cipher = Cipher.getInstance("DES");
-                spec = new SecretKeySpec(passwordBytes, "DES");
-                cipher.init(Cipher.DECRYPT_MODE, spec);
-                try {
-                    fileArray = cipher.doFinal(fileArray);
-                } catch (Exception bp) {
-                    message = "Incorrent Password";
-                    bp.printStackTrace();
-                    return false;
-                }
-                messageSize = fileArray.length;
-            }
-
-
-            if (features == CUF || features == CEF) {
-                ByteArrayOutputStream by = new ByteArrayOutputStream();
-                DataOutputStream out = new DataOutputStream(by);
-
-                ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(fileArray));
-                ZipEntry entry = zipIn.getNextEntry();
-                dataFile = new File(entry.getName());
-
-                byteArrayIn = new byte[1024];
-                while ((tempInt = zipIn.read(byteArrayIn, 0, 1024)) != -1) {
-                    out.write(byteArrayIn, 0, tempInt);
-                }
-
-                zipIn.close();
-                out.close();
-                fileArray = by.toByteArray();
-                messageSize = fileArray.length;
-            }
-
-            info.setDataFile(dataFile);
-            if (dataFile.exists() && !overwrite) {
-                message = "File Exists";
-                return false;
-            }
-
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(dataFile));
-            out.write(fileArray, 0, fileArray.length);
-            out.close();
-        } catch (Exception e) {
-            message = "Oops!!\n Error: " + e;
-            e.printStackTrace();
+        if (messageSize <= 0) {
+            message = "Unexpected size of embedded file: 0.";
             return false;
         }
+
+
+        if (features == CEF || features == UEF) {
+            password = password.substring(0, 8);
+            byte passwordBytes[] = password.getBytes();
+            cipher = Cipher.getInstance("DES");
+            spec = new SecretKeySpec(passwordBytes, "DES");
+            cipher.init(Cipher.DECRYPT_MODE, spec);
+            fileArray = cipher.doFinal(fileArray);
+            messageSize = fileArray.length;
+        }
+
+
+        if (features == CUF || features == CEF) {
+            ByteArrayOutputStream by = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(by);
+
+            ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(fileArray));
+            ZipEntry entry = zipIn.getNextEntry();
+            dataFile = new File(entry.getName());
+
+            byteArrayIn = new byte[1024];
+            while ((tempInt = zipIn.read(byteArrayIn, 0, 1024)) != -1) {
+                out.write(byteArrayIn, 0, tempInt);
+            }
+
+            zipIn.close();
+            out.close();
+            fileArray = by.toByteArray();
+            messageSize = fileArray.length;
+        }
+
+        info.setDataFile(dataFile);
+        if (dataFile.exists() && !overwrite) {
+            message = "File Exists";
+            return false;
+        }
+
+        DataOutputStream out = new DataOutputStream(new FileOutputStream(dataFile));
+        out.write(fileArray, 0, fileArray.length);
+        out.close();
+
 
         message = "Retrieved file size: " + messageSize + " B";
         return true;

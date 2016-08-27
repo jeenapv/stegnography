@@ -20,6 +20,7 @@ public class Configuration {
 
     public static String iconFolder = "images/";
     public static String masterPoolLocation = "masterPool/";
+    public static String retreivedFilePoolLocation = "retreivedFilePool";
     public static String sendImageSubject = "Stegnography - Authenticated data ";
 
     public static void initializeEnvironment() {
@@ -28,12 +29,17 @@ public class Configuration {
             if (!f_iconFolder.exists()) {
                 f_iconFolder.mkdir();
             }
-            
+
             File f_masterPoolLocation = new File(masterPoolLocation);
             if (!f_masterPoolLocation.exists()) {
                 f_masterPoolLocation.mkdir();
             }
             
+            File f_retreivedFilePoolLocation = new File(retreivedFilePoolLocation);
+            if (!f_retreivedFilePoolLocation.exists()) {
+                f_retreivedFilePoolLocation.mkdir();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
