@@ -21,6 +21,26 @@ public class Configuration {
     public static String iconFolder = "images/";
     public static String masterPoolLocation = "masterPool/";
     public static String sendImageSubject = "Stegnography - Authenticated data ";
+
+    public static void initializeEnvironment() {
+        try {
+            File f_iconFolder = new File(iconFolder);
+            if (!f_iconFolder.exists()) {
+                f_iconFolder.mkdir();
+            }
+            
+            File f_masterPoolLocation = new File(masterPoolLocation);
+            if (!f_masterPoolLocation.exists()) {
+                f_masterPoolLocation.mkdir();
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public static void setIconOnLabel(String fileString, JLabel label) {
         // convert string file path to image icona and set on this label
         BufferedImage img = null;
@@ -33,7 +53,7 @@ public class Configuration {
             e.printStackTrace();
         }
     }
-    
+
     public static void setIconOnLabelFromFile(File file, JLabel label) {
         // convert string file path to image icona and set on this label
         BufferedImage img = null;

@@ -6,6 +6,7 @@
 
 package steg;
 
+import General.Configuration;
 import View.Login;
 
 /**
@@ -19,6 +20,7 @@ public class Steg {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Configuration.initializeEnvironment();
         Login login = new Login();
         login.setVisible(true);
         
