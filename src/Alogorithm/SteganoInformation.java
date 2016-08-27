@@ -181,7 +181,7 @@ public class SteganoInformation {
             starter = "Invalid";
             return;
         } else {
-            starter = "MUJEEB";
+            starter = "stegnograph";
         }
 
 
@@ -222,7 +222,7 @@ public class SteganoInformation {
     }
 
     public boolean isValid() {
-        if (starter.equals("MUJEEB")) {
+        if (starter.equals("stegnograph")) {
             return true;
         } else {
             return false;

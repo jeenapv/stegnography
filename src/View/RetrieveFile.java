@@ -36,6 +36,7 @@ public class RetrieveFile extends javax.swing.JFrame {
     private void loadIcons() {
         Configuration.setIconOnLabel("file.png", retreived_file_icon);
         retreived_file_icon.setVisible(false);
+        sucess_label.setVisible(false);
     }
 
     /**
@@ -210,6 +211,7 @@ public class RetrieveFile extends javax.swing.JFrame {
                     if (retreivedFile != null) {
                         JOptionPane.showMessageDialog(rootPane, "Sucessfully retreived");
                         retreived_file_icon.setVisible(true);
+                        sucess_label.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Incorrect password");
                     }

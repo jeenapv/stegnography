@@ -694,7 +694,7 @@ class SteganoInformation_old {
             starter = "Invalid";
             return;
         } else {
-            starter = "MUJEEB";
+            starter = "stegnograph";
         }
 
 
@@ -735,7 +735,7 @@ class SteganoInformation_old {
     }
 
     public boolean isValid() {
-        if (starter.equals("MUJEEB")) {
+        if (starter.equals("stegnograph")) {
             return true;
         } else {
             return false;
