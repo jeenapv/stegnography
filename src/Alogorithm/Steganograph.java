@@ -1,5 +1,6 @@
 package Alogorithm;
 
+import General.Configuration;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.zip.*;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
+import org.apache.commons.io.FilenameUtils;
 
 public class Steganograph {
 
@@ -371,7 +373,7 @@ public class Steganograph {
         return true;
     }
 
-    public static boolean retrieveFile(SteganoInformation info, String password, boolean overwrite) throws Exception {
+    public static File retrieveFile(SteganoInformation info, String password, boolean overwrite) throws Exception {
         File dataFile = null;
         features = info.getFeatures();
         masterFile = info.getFile();
@@ -388,7 +390,7 @@ public class Steganograph {
 
         if (messageSize <= 0) {
             message = "Unexpected size of embedded file: 0.";
-            return false;
+            return null;
         }
 
 
@@ -409,7 +411,10 @@ public class Steganograph {
 
             ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(fileArray));
             ZipEntry entry = zipIn.getNextEntry();
-            dataFile = new File(entry.getName());
+            //dataFile = new File(Configuration.retreivedFilePoolLocation + entry.getName());
+            String retreived_file_name = Configuration.retreivedFilePoolLocation + System.currentTimeMillis() + "." + FilenameUtils.getExtension(entry.getName());
+            dataFile = new File(retreived_file_name);
+
 
             byteArrayIn = new byte[1024];
             while ((tempInt = zipIn.read(byteArrayIn, 0, 1024)) != -1) {
@@ -425,7 +430,7 @@ public class Steganograph {
         info.setDataFile(dataFile);
         if (dataFile.exists() && !overwrite) {
             message = "File Exists";
-            return false;
+            return null;
         }
 
         DataOutputStream out = new DataOutputStream(new FileOutputStream(dataFile));
@@ -434,7 +439,7 @@ public class Steganograph {
 
 
         message = "Retrieved file size: " + messageSize + " B";
-        return true;
+        return dataFile;
     }
 
     private static void embedBytes(byte[] bytes) {

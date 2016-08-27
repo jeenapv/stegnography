@@ -20,7 +20,7 @@ public class Configuration {
 
     public static String iconFolder = "images/";
     public static String masterPoolLocation = "masterPool/";
-    public static String retreivedFilePoolLocation = "retreivedFilePool";
+    public static String retreivedFilePoolLocation = "retreivedFilePool/";
     public static String sendImageSubject = "Stegnography - Authenticated data ";
 
     public static void initializeEnvironment() {
