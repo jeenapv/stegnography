@@ -84,7 +84,7 @@ public class ConfigureWatermark extends javax.swing.JFrame {
 
         jLabel8.setText("Template Name");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "tahoma", "arial", "gothik" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TimesRoman", "Helvetica", "Courier", "Dialog", "ZapfDingbats", "" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

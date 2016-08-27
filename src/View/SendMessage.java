@@ -3,16 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
+import Email.MailSender;
 import General.Configuration;
 import db.Dbcon;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -28,9 +34,36 @@ public class SendMessage extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
-     private void loadIcons() {
+    File outputCipherFile;
+    ProgressBarThread progressBarThread = new ProgressBarThread();
+
+    public SendMessage(File outputCipherFile) {
+        initComponents();
+        receiver_name.setEditable(false);
+        this.outputCipherFile = outputCipherFile;
+        this.setLocationRelativeTo(null);
+        loadThumbnail();
+        loadRecepients();
+    }
+
+    private void loadRecepients() {
+        try {
+            ResultSet rs = new Dbcon().select("select email_id from tbl_user_details ");
+            while (rs.next()) {
+                receiver_email.addItem(rs.getString("email_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadIcons() {
         Configuration.setIconOnLabel("msg.png", jLabel1);
-      }
+    }
+
+    private void loadThumbnail() {
+        Configuration.setIconOnLabelFromFile(outputCipherFile, jLabel1);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,12 +81,12 @@ public class SendMessage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        receiver_name = new javax.swing.JTextField();
+        receiver_email = new javax.swing.JComboBox();
+        progress_bar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jithinpv\\Documents\\NetBeansProjects\\stegnography\\images\\msg.png")); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -74,59 +107,71 @@ public class SendMessage extends javax.swing.JFrame {
             }
         });
 
+        receiver_email.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                receiver_emailItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(47, 47, 47)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(207, 207, 207))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(receiver_email, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(receiver_name, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addComponent(receiver_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(receiver_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,31 +179,48 @@ public class SendMessage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String receiverName=jTextField1.getText();
-        String receiverMail=jTextField2.getText();
-        if(receiverName.equals(""))
-        {
+        String receiverName = receiver_name.getText();
+        String receiverMail = receiver_email.getSelectedItem().toString().trim();
+        if (receiverName.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter receiver name");
-        }
-        else if(receiverMail.equals(""))
-        {
-             JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
-        }else
-        {
+        } else if (receiverMail.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Enter receiver email id");
+        } else {
             Dbcon dbcon = new Dbcon();
-            ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='"+receiverMail+"'");
+            ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='" + receiverMail + "'");
             try {
                 if (rs.next()) {
-                    String receiver_id=rs.getString(1);
-                    dbcon.update("update tbl_transfer_log set sender_id='"+Login.logged_in_user_id+"',receiver_id='"+receiver_id +"',transfer_date='"+System.currentTimeMillis()+"',is_send=1 where password='"+MessageEncryption.encryption_password+"'");
+                    String receiver_id = rs.getString(1);
+                    String[] recepients = {receiverMail};
+                    progressBarThread.start();
+                    MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
+                    progressBarThread.complete = true;
+                    dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
                     JOptionPane.showMessageDialog(rootPane, "success");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_receiver_emailItemStateChanged
+
+    try {
+        ResultSet rs = new Dbcon().select("select * from tbl_user_details where email_id='" + receiver_email.getSelectedItem().toString().trim() + "'");
+        if (rs.next()) {
+            receiver_name.setText(rs.getString("first_name") + " " + rs.getString("last_name"));
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Could not fetch details for particular email");
+            receiver_name.setEditable(true);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    // TODO add your handling code here:
+}//GEN-LAST:event_receiver_emailItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -189,12 +251,12 @@ public class SendMessage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new SendMessage().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -203,7 +265,34 @@ public class SendMessage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JProgressBar progress_bar;
+    private javax.swing.JComboBox receiver_email;
+    private javax.swing.JTextField receiver_name;
     // End of variables declaration//GEN-END:variables
+}
+
+class ProgressBarThread extends Thread {
+
+    public boolean complete = false;
+    JProgressBar progress_bar;
+
+    public void init_progress(JProgressBar progress_bar) {
+        this.progress_bar = progress_bar;
+    }
+
+    public void run() {
+        complete = false;
+        progress_bar.setValue(0);
+        int value = 0;
+        while (value < 100 && !complete) {
+            value++;
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            progress_bar.setValue(value);
+        }
+        progress_bar.setValue(100);
+    }
 }

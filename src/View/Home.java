@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
@@ -22,7 +21,7 @@ public class Home extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadIcons();
     }
-    
+
     private void loadIcons() {
         Configuration.setIconOnLabel("configure.png", jLabel3);
         Configuration.setIconOnLabel("embedmsg.png", jLabel1);
@@ -374,46 +373,46 @@ public class Home extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        ConfigureWatermark configureWatermark=new ConfigureWatermark();
+        ConfigureWatermark configureWatermark = new ConfigureWatermark();
         configureWatermark.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        EmbedMessage embedMessage=new EmbedMessage();
+        EmbedMessage embedMessage = new EmbedMessage();
         embedMessage.setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        RetrieveMessage retrieveMessage=new RetrieveMessage();
+        RetrieveMessage retrieveMessage = new RetrieveMessage();
         retrieveMessage.setVisible(true);
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        RetrieveFile retrieveFile=new RetrieveFile();
+        RetrieveFile retrieveFile = new RetrieveFile();
         retrieveFile.setVisible(true);
-       
-        
+
+
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-         this.dispose();
-        EmbedFile embedFile=new EmbedFile();
+        this.dispose();
+        EmbedFile embedFile = new EmbedFile();
         embedFile.setVisible(true);
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        ViewInbox viewInbox=new ViewInbox();
+        ViewInbox viewInbox = new ViewInbox();
         viewInbox.setVisible(true);
-        
+
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -437,77 +436,73 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
     private void jMenuItem4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseClicked
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_jMenuItem4MouseClicked
 
     private void jMenuItem5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem5MouseClicked
         // TODO add your handling code here:
-         
     }//GEN-LAST:event_jMenuItem5MouseClicked
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        EmbedMessage embedMessage=new EmbedMessage();
+        EmbedMessage embedMessage = new EmbedMessage();
         embedMessage.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         // TODO add your handling code here:
-       
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-         this.dispose();
-        ChangePassword changePassword=new ChangePassword();
+        this.dispose();
+        ChangePassword changePassword = new ChangePassword();
         changePassword.setVisible(true);
     }//GEN-LAST:event_jMenu4MouseClicked
 
     private void jMenuItem3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        ConfigureWatermark configureWatermark=new ConfigureWatermark();
+        ConfigureWatermark configureWatermark = new ConfigureWatermark();
         configureWatermark.setVisible(true);
     }//GEN-LAST:event_jMenuItem3MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ConfigureWatermark configureWatermark=new ConfigureWatermark();
+        ConfigureWatermark configureWatermark = new ConfigureWatermark();
         configureWatermark.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-       RetrieveMessage retrieveMessage=new RetrieveMessage();
-       retrieveMessage.setVisible(true);
+        RetrieveMessage retrieveMessage = new RetrieveMessage();
+        retrieveMessage.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        RetrieveFile retrieveFile=new RetrieveFile();
+        RetrieveFile retrieveFile = new RetrieveFile();
         retrieveFile.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        EmbedFile embedFile=new EmbedFile();
+        EmbedFile embedFile = new EmbedFile();
         embedFile.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
         // TODO add your handling code here:
-       
     }//GEN-LAST:event_jMenu5ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
-         this.dispose();
-        ViewInbox viewInbox=new ViewInbox();
+        this.dispose();
+        ViewInbox viewInbox = new ViewInbox();
         viewInbox.setVisible(true);
     }//GEN-LAST:event_jMenu5MouseClicked
 
@@ -540,12 +535,12 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Home().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

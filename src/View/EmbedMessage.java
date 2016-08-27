@@ -19,17 +19,22 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
  * @author Jithinpv
  */
 public class EmbedMessage extends javax.swing.JFrame {
-     public static int process_id=0;
+
+    public static int process_id = 0;
 
     /**
      * Creates new form EmbedMessage
      */
+    
+    String masterFileName;
     public EmbedMessage() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -37,9 +42,10 @@ public class EmbedMessage extends javax.swing.JFrame {
         proceed_button.setEnabled(false);
         analyze_button.setEnabled(false);
     }
-      private void loadIcons() {
+
+    private void loadIcons() {
         Configuration.setIconOnLabel("msg.png", image_Label);
-      }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,21 +168,18 @@ public class EmbedMessage extends javax.swing.JFrame {
         // TODO add your handling code here:
         store_analyse_masterfile();
         proceed_button.setEnabled(true);
-        
+
 
     }//GEN-LAST:event_analyze_buttonActionPerformed
 
-    public void store_analyse_masterfile(){
-        Dbcon dbcon=new Dbcon();
-        String sql="update tbl_encryption_log set analyze_started_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedMessage.process_id+"'";
+    public void store_analyse_masterfile() {
+        Dbcon dbcon = new Dbcon();
+        String sql = "update tbl_encryption_log set analyze_started_time='" + System.currentTimeMillis() + "' where process_id='" + EmbedMessage.process_id + "'";
         System.out.println(sql);
         dbcon.update(sql);
-        
+
     }
-    
-    
-    
-    
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -193,45 +196,55 @@ public class EmbedMessage extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            String path=chooser.getSelectedFile().getPath();
-            image_name.setText(chooser.getSelectedFile().getName());
-            System.out.println("You chose to open this file: "
-                    + path);
-            BufferedImage img = null;
+            String path = chooser.getSelectedFile().getPath();
+
             try {
-                img = ImageIO.read(new File(path));
-                Image scaledInstance = img.getScaledInstance(image_Label.getWidth(), image_Label.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon imageIcon = new ImageIcon(scaledInstance);
-                image_Label.setIcon(imageIcon);
-            } catch (IOException e) {
+                String masterKeyBackUpName = System.currentTimeMillis() + "." + FilenameUtils.getExtension(chooser.getSelectedFile().getPath());
+                String masterKeyBackUpLocation = Configuration.masterPoolLocation + masterKeyBackUpName;
+                masterFileName = masterKeyBackUpName;
+                FileUtils.copyFile(chooser.getSelectedFile(), new File(masterKeyBackUpLocation));
+
+                image_name.setText(chooser.getSelectedFile().getName());
+                System.out.println("You chose to open this file: "
+                        + path);
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File(path));
+                    Image scaledInstance = img.getScaledInstance(image_Label.getWidth(), image_Label.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(scaledInstance);
+                    image_Label.setIcon(imageIcon);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                long size = (chooser.getSelectedFile().length()) / 1024;
+
+                Dbcon dbcon = new Dbcon();
+                int ins = dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size)values('" + Login.logged_in_user_id + "','" + masterKeyBackUpName + "','" + size + "')");
+                if (ins > 0) {
+                    ResultSet rs = dbcon.select("select max(process_id)  from tbl_encryption_log");
+                    try {
+                        if (rs.next()) {
+                            System.out.println(rs.getString(1));
+                            EmbedMessage.process_id = Integer.parseInt(rs.getString(1));
+                            System.out.println(EmbedMessage.process_id);
+                            analyze_button.setEnabled(true);
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            long size=(chooser.getSelectedFile().length())/1024;
-            
-            Dbcon dbcon=new Dbcon();
-            int ins=dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size)values('"+Login.logged_in_user_id+"','"+path+"','"+size+"')");
-            if(ins>0){
-              ResultSet rs= dbcon.select("select max(process_id)  from tbl_encryption_log");
-                try {
-                    if(rs.next()){
-                       System.out.println(rs.getString(1));
-                       EmbedMessage.process_id=Integer.parseInt(rs.getString(1));
-                       System.out.println(EmbedMessage.process_id);
-                        analyze_button.setEnabled(true);
-                    } 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-                
-            }
-            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void proceed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceed_buttonActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        MessageEncryption messageEncryption = new MessageEncryption();
+        MessageEncryption messageEncryption = new MessageEncryption(masterFileName);
         messageEncryption.setVisible(true);
     }//GEN-LAST:event_proceed_buttonActionPerformed
 
@@ -264,12 +277,12 @@ public class EmbedMessage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new EmbedMessage().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analyze_button;
     private javax.swing.JLabel image_Label;
