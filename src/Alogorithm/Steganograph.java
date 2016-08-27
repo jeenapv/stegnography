@@ -173,70 +173,59 @@ public class Steganograph {
         return true;
     }
 
-    public static String retrieveMessage(SteganoInformation info, String password) {
+    public static String retrieveMessage(SteganoInformation info, String password) throws Exception {
         String messg = null;
         features = info.getFeatures();
 
-        try {
-            masterFile = info.getFile();
-            byteArrayIn = new byte[(int) masterFile.length()];
 
-            DataInputStream in = new DataInputStream(new FileInputStream(masterFile));
-            in.read(byteArrayIn, 0, (int) masterFile.length());
-            in.close();
+        masterFile = info.getFile();
+        byteArrayIn = new byte[(int) masterFile.length()];
 
-            messageSize = info.getDataLength();
+        DataInputStream in = new DataInputStream(new FileInputStream(masterFile));
+        in.read(byteArrayIn, 0, (int) masterFile.length());
+        in.close();
 
-            if (messageSize <= 0) {
-                message = "Unexpected size of message: 0.";
-                return ("#FAILED#");
-            }
+        messageSize = info.getDataLength();
 
-            byte[] messageArray = new byte[messageSize];
-            inputOutputMarker = info.getInputMarker();
-            readBytes(messageArray);
-
-
-            if (features == CEM || features == UEM) {
-                password = password.substring(0, 8);
-                byte passwordBytes[] = password.getBytes();
-                cipher = Cipher.getInstance("DES");
-                spec = new SecretKeySpec(passwordBytes, "DES");
-                cipher.init(Cipher.DECRYPT_MODE, spec);
-                try {
-                    messageArray = cipher.doFinal(messageArray);
-                } catch (Exception bp) {
-                    message = "Incorrent Password";
-                    bp.printStackTrace();
-                    return "#FAILED#";
-                }
-                messageSize = messageArray.length;
-            }
-
-
-            if (features == CUM || features == CEM) {
-                ByteArrayOutputStream by = new ByteArrayOutputStream();
-                DataOutputStream out = new DataOutputStream(by);
-
-                ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(messageArray));
-                zipIn.getNextEntry();
-                byteArrayIn = new byte[1024];
-                while ((tempInt = zipIn.read(byteArrayIn, 0, 1024)) != -1) {
-                    out.write(byteArrayIn, 0, tempInt);
-                }
-
-                zipIn.close();
-                out.close();
-                messageArray = by.toByteArray();
-                messageSize = messageArray.length;
-            }
-
-            messg = new String(SteganoInformation.byteToCharArray(messageArray));
-        } catch (Exception e) {
-            message = "Oops!!\n Error: " + e;
-            e.printStackTrace();
+        if (messageSize <= 0) {
+            message = "Unexpected size of message: 0.";
             return ("#FAILED#");
         }
+
+        byte[] messageArray = new byte[messageSize];
+        inputOutputMarker = info.getInputMarker();
+        readBytes(messageArray);
+
+
+        if (features == CEM || features == UEM) {
+            password = password.substring(0, 8);
+            byte passwordBytes[] = password.getBytes();
+            cipher = Cipher.getInstance("DES");
+            spec = new SecretKeySpec(passwordBytes, "DES");
+            cipher.init(Cipher.DECRYPT_MODE, spec);
+            messageArray = cipher.doFinal(messageArray);
+            messageSize = messageArray.length;
+        }
+
+
+        if (features == CUM || features == CEM) {
+            ByteArrayOutputStream by = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(by);
+
+            ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(messageArray));
+            zipIn.getNextEntry();
+            byteArrayIn = new byte[1024];
+            while ((tempInt = zipIn.read(byteArrayIn, 0, 1024)) != -1) {
+                out.write(byteArrayIn, 0, tempInt);
+            }
+
+            zipIn.close();
+            out.close();
+            messageArray = by.toByteArray();
+            messageSize = messageArray.length;
+        }
+
+        messg = new String(SteganoInformation.byteToCharArray(messageArray));
 
         message = "Message size: " + messageSize + " B";
         return messg;
@@ -543,7 +532,7 @@ public class Steganograph {
     }
 }
 
-class SteganoInformation {
+class SteganoInformation_old {
 
     private File file;
     private File dataFile = null;
@@ -660,7 +649,7 @@ class SteganoInformation {
         return chars;
     }
 
-    public SteganoInformation(File file) {
+    public SteganoInformation_old(File file) {
         this.file = file;
         isEster = false;
 
