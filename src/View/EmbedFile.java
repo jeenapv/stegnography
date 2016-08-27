@@ -18,13 +18,18 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
  * @author Jithinpv
  */
 public class EmbedFile extends javax.swing.JFrame {
-public static int process_id=0;
+
+    public static int process_id = 0;
+    String masterFileName;
+
     /**
      * Creates new form EmbedFile
      */
@@ -32,7 +37,10 @@ public static int process_id=0;
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();
+        analyze_complete_label.setVisible(false);
+        proceed_button.setEnabled(false);
     }
+
     private void loadIcons() {
         Configuration.setIconOnLabel("file.png", jLabel2);
     }
@@ -50,11 +58,11 @@ public static int process_id=0;
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        analyze_complete_label = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        proceed_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,8 +75,6 @@ public static int process_id=0;
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jithinpv\\Documents\\NetBeansProjects\\stegnography\\images\\file.png")); // NOI18N
-        jLabel2.setText("jLabel2");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton2.setText("Analyse Master File");
@@ -78,7 +84,7 @@ public static int process_id=0;
             }
         });
 
-        jLabel3.setText("Analyse complete");
+        analyze_complete_label.setText("Analyse complete");
 
         jLabel4.setText("Embed File");
 
@@ -89,10 +95,10 @@ public static int process_id=0;
             }
         });
 
-        jButton4.setText("PROCEED");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        proceed_button.setText("PROCEED");
+        proceed_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                proceed_buttonActionPerformed(evt);
             }
         });
 
@@ -109,7 +115,7 @@ public static int process_id=0;
                                 .addGap(75, 75, 75)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4))
+                                .addComponent(proceed_button))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(78, 78, 78)
@@ -119,7 +125,7 @@ public static int process_id=0;
                             .addGap(78, 78, 78)
                             .addComponent(jButton2)
                             .addGap(18, 18, 18)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(analyze_complete_label, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(102, 102, 102)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -149,11 +155,11 @@ public static int process_id=0;
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jLabel3))
+                    .addComponent(analyze_complete_label))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(proceed_button))
                 .addGap(39, 39, 39))
         );
 
@@ -162,15 +168,17 @@ public static int process_id=0;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        store_analyse_masterfile(); 
+        store_analyse_masterfile();
+        analyze_complete_label.setVisible(true);
+        proceed_button.setEnabled(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-      public void store_analyse_masterfile(){
-        Dbcon dbcon=new Dbcon();
-        String sql="update tbl_encryption_log set analyze_started_time='"+System.currentTimeMillis()+"' where process_id='"+EmbedFile.process_id+"'";
+    public void store_analyse_masterfile() {
+        Dbcon dbcon = new Dbcon();
+        String sql = "update tbl_encryption_log set analyze_started_time='" + System.currentTimeMillis() + "' where process_id='" + EmbedFile.process_id + "'";
         System.out.println(sql);
         dbcon.update(sql);
-        
+
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -188,8 +196,16 @@ public static int process_id=0;
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            String path=chooser.getSelectedFile().getPath();
+            String path = chooser.getSelectedFile().getPath();
             jLabel2.setText(chooser.getSelectedFile().getName());
+            String masterKeyBackUpName = System.currentTimeMillis() + "." + FilenameUtils.getExtension(chooser.getSelectedFile().getPath());
+            String masterKeyBackUpLocation = Configuration.masterPoolLocation + masterKeyBackUpName;
+            masterFileName = masterKeyBackUpName;
+            try {
+                FileUtils.copyFile(chooser.getSelectedFile(), new File(masterKeyBackUpLocation));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.out.println("You chose to open this file: "
                     + path);
             BufferedImage img = null;
@@ -201,33 +217,33 @@ public static int process_id=0;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            long size=(chooser.getSelectedFile().length())/1024;
-            
-            Dbcon dbcon=new Dbcon();
-            int ins=dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size)values('"+Login.logged_in_user_id+"','"+path+"','"+size+"')");
-            if(ins>0){
-              ResultSet rs= dbcon.select("select max(process_id)  from tbl_encryption_log");
+            long size = (chooser.getSelectedFile().length()) / 1024;
+
+            Dbcon dbcon = new Dbcon();
+            int ins = dbcon.insert("insert into tbl_encryption_log(user_id,master_file,master_file_size,encryption_type)values('" + Login.logged_in_user_id + "','" + path + "','" + size + "',1)");
+            if (ins > 0) {
+                ResultSet rs = dbcon.select("select max(process_id)  from tbl_encryption_log");
                 try {
-                    if(rs.next()){
-                       System.out.println(rs.getString(1));
-                       EmbedFile.process_id=Integer.parseInt(rs.getString(1));
-                       System.out.println(EmbedFile.process_id);
-                       
-                    } 
+                    if (rs.next()) {
+                        System.out.println(rs.getString(1));
+                        EmbedFile.process_id = Integer.parseInt(rs.getString(1));
+                        System.out.println(EmbedFile.process_id);
+
+                    }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }
         }
-            
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void proceed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceed_buttonActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        FileEncryption fileEncryption = new FileEncryption();
+        FileEncryption fileEncryption = new FileEncryption(masterFileName);
         fileEncryption.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_proceed_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,21 +274,21 @@ public static int process_id=0;
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new EmbedFile().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel analyze_complete_label;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton proceed_button;
     // End of variables declaration//GEN-END:variables
 }

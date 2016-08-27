@@ -41,6 +41,7 @@ public class EmbedMessage extends javax.swing.JFrame {
         loadIcons();
         proceed_button.setEnabled(false);
         analyze_button.setEnabled(false);
+        analyze_complete_label.setVisible(false);
     }
 
     private void loadIcons() {
@@ -60,7 +61,7 @@ public class EmbedMessage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         image_Label = new javax.swing.JLabel();
         analyze_button = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        analyze_complete_label = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         image_name = new javax.swing.JLabel();
@@ -86,7 +87,7 @@ public class EmbedMessage extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Analyse Complete");
+        analyze_complete_label.setText("Analyse Complete");
 
         jLabel4.setText("Embed Message");
 
@@ -125,7 +126,7 @@ public class EmbedMessage extends javax.swing.JFrame {
                                 .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(analyze_button))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(analyze_complete_label, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGap(104, 104, 104)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +154,7 @@ public class EmbedMessage extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(analyze_button)
-                    .addComponent(jLabel3))
+                    .addComponent(analyze_complete_label))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(proceed_button)
@@ -168,7 +169,7 @@ public class EmbedMessage extends javax.swing.JFrame {
         // TODO add your handling code here:
         store_analyse_masterfile();
         proceed_button.setEnabled(true);
-
+        analyze_complete_label.setVisible(true);
 
     }//GEN-LAST:event_analyze_buttonActionPerformed
 
@@ -285,12 +286,12 @@ public class EmbedMessage extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analyze_button;
+    private javax.swing.JLabel analyze_complete_label;
     private javax.swing.JLabel image_Label;
     private javax.swing.JLabel image_name;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton proceed_button;
     // End of variables declaration//GEN-END:variables

@@ -222,7 +222,6 @@ public class MessageEncryption extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return success;
     }
 
