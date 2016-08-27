@@ -7,6 +7,7 @@ package View;
 
 import Email.MailSender;
 import General.Configuration;
+import General.ProgressBar;
 import db.Dbcon;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -35,7 +36,6 @@ public class SendMessage extends javax.swing.JFrame {
         loadIcons();
     }
     File outputCipherFile;
-    ProgressBarThread progressBarThread = new ProgressBarThread();
 
     public SendMessage(File outputCipherFile) {
         initComponents();
@@ -178,6 +178,7 @@ public class SendMessage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
         String receiverName = receiver_name.getText();
         String receiverMail = receiver_email.getSelectedItem().toString().trim();
         if (receiverName.equals("")) {
@@ -189,13 +190,20 @@ public class SendMessage extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='" + receiverMail + "'");
             try {
                 if (rs.next()) {
+
+                    ProgressBar progressBarThread = new ProgressBar();
+                    progressBarThread.init_progress(progress_bar);
+                    Thread thread = new Thread(progressBarThread);
+                    thread.start();
+                    System.out.println("Starting thread");
                     String receiver_id = rs.getString(1);
-                    String[] recepients = {receiverMail};
-                    progressBarThread.start();
-                    MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
-                    progressBarThread.complete = true;
-                    dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
-                    JOptionPane.showMessageDialog(rootPane, "success");
+
+                    MailSenderThread mailSenderThread = new MailSenderThread(receiverMail, progressBarThread);
+                    mailSenderThread.start();
+//                    dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
+                    int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + MessageEncryption.encryption_password + "' )");
+                    System.out.println("Insert transfer log table status " + ins);
+                    
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -203,6 +211,24 @@ public class SendMessage extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    class MailSenderThread extends Thread {
+
+        String[] recepients = new String[1];
+        ProgressBar progressBarThread;
+        public MailSenderThread(String recepients,ProgressBar progressBarThread) {
+            this.recepients[0] = recepients;
+            this.progressBarThread = progressBarThread;
+        }
+
+        public void start() {
+            System.out.println("Starting mail sending");
+            MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
+            this.progressBarThread.complete = true;
+            System.out.println("Send sucess");
+            JOptionPane.showMessageDialog(null, "success");
+        }
+    }
 
 private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_receiver_emailItemStateChanged
 
@@ -268,30 +294,4 @@ private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN
     private javax.swing.JComboBox receiver_email;
     private javax.swing.JTextField receiver_name;
     // End of variables declaration//GEN-END:variables
-}
-
-class ProgressBarThread extends Thread {
-
-    public boolean complete = false;
-    JProgressBar progress_bar;
-
-    public void init_progress(JProgressBar progress_bar) {
-        this.progress_bar = progress_bar;
-    }
-
-    public void run() {
-        complete = false;
-        progress_bar.setValue(0);
-        int value = 0;
-        while (value < 100 && !complete) {
-            value++;
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            progress_bar.setValue(value);
-        }
-        progress_bar.setValue(100);
-    }
 }

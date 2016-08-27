@@ -197,7 +197,7 @@ public class FileEncryption extends javax.swing.JFrame {
             if (Steganograph.embedFile(masterFile, outPutCipherFile, embedding_file, 50, password)) {
                 JOptionPane.showMessageDialog(rootPane, "Successfully embeded data");
                 this.dispose();
-                SendMessage send = new SendMessage(outPutCipherFile);
+                SendFile send = new SendFile(outPutCipherFile);
                 send.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Could not embed, please try again after some time");

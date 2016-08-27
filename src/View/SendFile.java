@@ -7,6 +7,7 @@ package View;
 
 import Email.MailSender;
 import General.Configuration;
+import General.ProgressBar;
 import db.Dbcon;
 import java.io.File;
 import java.sql.ResultSet;
@@ -30,7 +31,6 @@ public class SendFile extends javax.swing.JFrame {
         loadIcons();
     }
     File outputCipherFile;
-    ProgressBarThread progressBarThread = new ProgressBarThread();
 
     public SendFile(File outputCipherFile) {
         initComponents();
@@ -205,10 +205,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             if (rs.next()) {
                 String receiver_id = rs.getString(1);
                 String[] recepients = {receiverMail};
-                progressBarThread.start();
+                ProgressBar progressBarThread = new ProgressBar();
+                progressBarThread.init_progress(progress_bar);
+                Thread thread = new Thread(progressBarThread);
+                thread.start();
+
                 MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
                 progressBarThread.complete = true;
-                dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
+                int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password,encrpypted_data) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + MessageEncryption.encryption_password + "',1)");
+                System.out.println("Insert transfer log table status " + ins);
+//                dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
                 JOptionPane.showMessageDialog(rootPane, "success");
             }
         } catch (Exception e) {
