@@ -35,6 +35,7 @@ public class MessageEncryption extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadWatermarkTemplates();
         encrypt_button.setEnabled(false);
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
     File masterFile = null;
 
@@ -46,6 +47,7 @@ public class MessageEncryption extends javax.swing.JFrame {
         masterFile = new File(Configuration.masterPoolLocation + masterFileName);
         max_data_size = Steganograph.getMaxAllowedDataSize(masterFile);
         checkSizeLimit();
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
 
     private boolean checkSizeLimit() {
@@ -93,12 +95,21 @@ public class MessageEncryption extends javax.swing.JFrame {
         watermark_templates = new javax.swing.JComboBox();
         progress_bar = new javax.swing.JProgressBar();
         characters_left_label = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Enter Password");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 45, 110, -1));
+        getContentPane().add(password_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 43, 209, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Enter Message");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 91, 110, -1));
 
         secret_message.setColumns(1);
         secret_message.setLineWrap(true);
@@ -110,7 +121,12 @@ public class MessageEncryption extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(secret_message);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 91, 209, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Characters left   : ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 220, 131, -1));
 
         jButton1.setText("Add Watermark");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +134,7 @@ public class MessageEncryption extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 304, -1, 25));
 
         encrypt_button.setText("Embed");
         encrypt_button.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +142,7 @@ public class MessageEncryption extends javax.swing.JFrame {
                 encrypt_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(encrypt_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 304, 81, 25));
 
         jButton3.setText("BACK");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -132,66 +150,16 @@ public class MessageEncryption extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 304, 71, 25));
 
+        getContentPane().add(watermark_templates, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 241, 209, -1));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 272, 271, 25));
+
+        characters_left_label.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        characters_left_label.setForeground(new java.awt.Color(255, 255, 255));
         characters_left_label.setText("100");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(watermark_templates, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(password_field, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(characters_left_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(encrypt_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(password_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(characters_left_label))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(watermark_templates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(encrypt_button, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
-        );
+        getContentPane().add(characters_left_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 220, 72, -1));
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 450, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,10 +180,10 @@ public class MessageEncryption extends javax.swing.JFrame {
             Dbcon dbcon = new Dbcon();
             dbcon.update("update tbl_encryption_log set encryption_start_time='" + System.currentTimeMillis() + "'where process_id='" + EmbedMessage.process_id + "'");
             //dbcon.insert("insert into tbl_encryption_log(encryption_start_time)values('"+System.currentTimeMillis()+"')");
-            //dbcon.insert("insert into tbl_transfer_log(password)values('" + password + "')");
             encryption_password = password;
             File outPutCipherFile = new File(Configuration.masterPoolLocation + FilenameUtils.getBaseName(masterFile.getName()) + "_cipher." + FilenameUtils.getExtension(masterFile.getName()));
             if (Steganograph.embedMessage(masterFile, outPutCipherFile, message, 50, password)) {
+                dbcon.update("update tbl_encryption_log set encryption_end_time='" + System.currentTimeMillis() + "' , cipher_file='" + outPutCipherFile.getName() + "' , cipher_file_size='" + outPutCipherFile.length() + "' where process_id='" + EmbedMessage.process_id + "'");
                 JOptionPane.showMessageDialog(rootPane, "Successfully embeded data");
                 this.dispose();
                 SendMessage send = new SendMessage(outPutCipherFile);
@@ -247,7 +215,7 @@ public class MessageEncryption extends javax.swing.JFrame {
                 String opacityString = rs.getString("opacity");
                 float opacity = Float.parseFloat(opacityString);
                 opacity = opacity / 100;
-                AddWaterMark.addNow(masterFile, font_family, Integer.parseInt(font_size), waterMarkName, opacity);
+                AddWaterMark.addNow(masterFile, font_family, Integer.parseInt(font_size), waterMarkName, opacity, font_color);
                 success = true;
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Watermark tempalte is corrupted!");
@@ -348,6 +316,7 @@ private void secret_messageKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel main_label;
     private javax.swing.JPasswordField password_field;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JTextArea secret_message;

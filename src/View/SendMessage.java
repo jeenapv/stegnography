@@ -28,7 +28,7 @@ public class SendMessage extends javax.swing.JFrame {
         loadIcons();
     }
     File outputCipherFile;
-    
+
     public SendMessage(File outputCipherFile) {
         initComponents();
         receiver_name.setEditable(false);
@@ -38,7 +38,7 @@ public class SendMessage extends javax.swing.JFrame {
         loadThumbnail();
         loadRecepients();
     }
-    
+
     private void loadRecepients() {
         try {
             ResultSet rs = new Dbcon().select("select email_id from tbl_user_details ");
@@ -49,16 +49,17 @@ public class SendMessage extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void loadIcons() {
         Configuration.setIconOnLabel("msg.png", image_thumbnail);
         Configuration.setIconOnLabel("sucess_icon.png", sucess_label);
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
-    
+
     private void loadThumbnail() {
         Configuration.setIconOnLabelFromFile(outputCipherFile, image_thumbnail);
         file_name_label.setText(outputCipherFile.getName());
-        size_label.setText("Size " + (outputCipherFile.length()/1024) + " kb");
+        size_label.setText("Size " + (outputCipherFile.length() / 1024) + " kb");
     }
 
     /**
@@ -82,21 +83,39 @@ public class SendMessage extends javax.swing.JFrame {
         progress_bar = new javax.swing.JProgressBar();
         jButton2 = new javax.swing.JButton();
         sucess_label = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         image_thumbnail.setText("jLabel1");
         image_thumbnail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(image_thumbnail, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 32, 184, 147));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Message Encrypted Successfully ");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 146, 210, -1));
 
+        file_name_label.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        file_name_label.setForeground(new java.awt.Color(255, 255, 255));
         file_name_label.setText("Name");
+        getContentPane().add(file_name_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 191, 379, -1));
 
+        size_label.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        size_label.setForeground(new java.awt.Color(255, 255, 255));
         size_label.setText("Size");
+        getContentPane().add(size_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 212, 112, 21));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Enter Reciever Name");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 272, 159, -1));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Enter Reciever Email id");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 241, 159, -1));
 
         jButton1.setText("SEND");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -104,12 +123,16 @@ public class SendMessage extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 301, -1, -1));
+        getContentPane().add(receiver_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 210, -1));
 
         receiver_email.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 receiver_emailItemStateChanged(evt);
             }
         });
+        getContentPane().add(receiver_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 239, 210, -1));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 335, 420, -1));
 
         jButton2.setText("HOME");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -117,83 +140,11 @@ public class SendMessage extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 301, -1, -1));
+        getContentPane().add(sucess_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 32, 134, 103));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(image_thumbnail, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(sucess_label, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton2)
-                                        .addGap(23, 23, 23)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(receiver_name, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
-                            .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(size_label, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(receiver_email, 0, 210, Short.MAX_VALUE))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(file_name_label, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(image_thumbnail, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(sucess_label, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addGap(30, 30, 30)))
-                .addComponent(file_name_label)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(size_label, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(receiver_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(receiver_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        main_label.setText("jLabel1");
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 450, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,30 +163,30 @@ public class SendMessage extends javax.swing.JFrame {
             ResultSet rs = dbcon.select("select * from tbl_user_details where email_id='" + receiverMail + "'");
             try {
                 if (rs.next()) {
-                    
+
                     ProgressBar progressBarThread = new ProgressBar();
                     progressBarThread.init_progress(progress_bar);
                     Thread thread = new Thread(progressBarThread);
                     thread.start();
                     System.out.println("Starting thread");
                     String receiver_id = rs.getString(1);
-                    
+
                     MailSenderThread mailSenderThread = new MailSenderThread(receiverMail, progressBarThread);
                     mailSenderThread.start();
 //                    dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
-                    int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + MessageEncryption.encryption_password + "' )");
+                    int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password, cipher_file) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + MessageEncryption.encryption_password + "' ,'" + outputCipherFile.getName() + "')");
                     System.out.println("Insert transfer log table status " + ins);
-                    
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     class MailSenderThread extends Thread {
-        
+
         String[] recepients = new String[1];
         ProgressBar progressBarThread;
 
@@ -243,7 +194,7 @@ public class SendMessage extends javax.swing.JFrame {
             this.recepients[0] = recepients;
             this.progressBarThread = progressBarThread;
         }
-        
+
         public void start() {
             System.out.println("Starting mail sending");
             MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
@@ -252,9 +203,9 @@ public class SendMessage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "success");
         }
     }
-    
+
 private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_receiver_emailItemStateChanged
-    
+
     try {
         ResultSet rs = new Dbcon().select("select * from tbl_user_details where email_id='" + receiver_email.getSelectedItem().toString().trim() + "'");
         if (rs.next()) {
@@ -263,13 +214,13 @@ private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN
             JOptionPane.showMessageDialog(rootPane, "Could not fetch details for particular email");
             receiver_name.setEditable(true);
         }
-        
+
     } catch (Exception e) {
         e.printStackTrace();
     }
     // TODO add your handling code here:
 }//GEN-LAST:event_receiver_emailItemStateChanged
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -306,7 +257,7 @@ private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new SendMessage().setVisible(true);
             }
@@ -320,6 +271,7 @@ private void receiver_emailItemStateChanged(java.awt.event.ItemEvent evt) {//GEN
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel main_label;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JComboBox receiver_email;
     private javax.swing.JTextField receiver_name;

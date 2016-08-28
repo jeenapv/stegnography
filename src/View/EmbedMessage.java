@@ -47,7 +47,7 @@ public class EmbedMessage extends javax.swing.JFrame {
     private void loadIcons() {
         Configuration.setIconOnLabel("msg.png", image_Label);
         Configuration.setIconOnLabel("sucess_icon.png", sucess_label);
-
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
 
     /**
@@ -70,10 +70,14 @@ public class EmbedMessage extends javax.swing.JFrame {
         proceed_button = new javax.swing.JButton();
         progress_bar = new javax.swing.JProgressBar();
         sucess_label = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select Master file");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 67, 157, -1));
 
         jButton1.setText("choose file");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,8 +85,10 @@ public class EmbedMessage extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 63, -1, -1));
 
         image_Label.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(image_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 118, 194, 133));
 
         analyze_button.setText("Analyse master file");
         analyze_button.addActionListener(new java.awt.event.ActionListener() {
@@ -90,10 +96,15 @@ public class EmbedMessage extends javax.swing.JFrame {
                 analyze_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(analyze_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 294, -1, -1));
 
+        analyze_complete_label.setForeground(new java.awt.Color(255, 255, 255));
         analyze_complete_label.setText("Analyse Complete");
+        getContentPane().add(analyze_complete_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 298, -1, -1));
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Embed Message");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 19, -1, -1));
 
         jButton3.setText("BACK");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +112,11 @@ public class EmbedMessage extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 367, 94, -1));
+
+        image_name.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        image_name.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(image_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 92, 300, 20));
 
         proceed_button.setText("PROCEED");
         proceed_button.addActionListener(new java.awt.event.ActionListener() {
@@ -108,74 +124,12 @@ public class EmbedMessage extends javax.swing.JFrame {
                 proceed_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(proceed_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 367, -1, -1));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 335, 279, 21));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(image_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(47, 47, 47)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(proceed_button))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(20, 20, 20))
-                                .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(analyze_button)
-                                .addGap(18, 18, 18)
-                                .addComponent(sucess_label, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(analyze_complete_label))
-                            .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel4)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(image_name, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(image_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(analyze_button)
-                            .addComponent(analyze_complete_label))
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sucess_label, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(proceed_button)
-                    .addComponent(jButton3))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
+        sucess_label.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(sucess_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 288, 46, 36));
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 380, 430));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -327,6 +281,7 @@ public class EmbedMessage extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel main_label;
     private javax.swing.JButton proceed_button;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JLabel sucess_label;

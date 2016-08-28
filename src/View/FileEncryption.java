@@ -22,7 +22,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Jithinpv
  */
 public class FileEncryption extends javax.swing.JFrame {
-    
+
     public static String enc_password;
     File masterFile = null;
     File embedding_file = null;
@@ -36,8 +36,9 @@ public class FileEncryption extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         encrypt_button.setEnabled(true);
         loadWatermarkTemplates();
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
-    
+
     public FileEncryption(String masterFileName) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -47,6 +48,7 @@ public class FileEncryption extends javax.swing.JFrame {
         encrypt_button.setEnabled(false);
         max_allowed_file_size = Steganograph.getMaxAllowedFileSize(masterFile);
         max_file_size_label.setText((max_allowed_file_size / 1024) + " kb");
+        Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
 
     /**
@@ -73,12 +75,21 @@ public class FileEncryption extends javax.swing.JFrame {
         max_file_size_label = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         selected_file_size_label = new javax.swing.JLabel();
+        main_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Enter Password");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 33, 121, -1));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(203, 30, 150, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Choose File");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 82, 121, -1));
 
         jButton1.setText("Browse");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,8 +97,12 @@ public class FileEncryption extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(203, 78, 150, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Maximum file size");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 166, 164, -1));
 
         add_watermark_button.setText("Add Watermark");
         add_watermark_button.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +110,7 @@ public class FileEncryption extends javax.swing.JFrame {
                 add_watermark_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(add_watermark_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 229, -1, -1));
 
         encrypt_button.setText("Embed");
         encrypt_button.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +118,7 @@ public class FileEncryption extends javax.swing.JFrame {
                 encrypt_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(encrypt_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 229, 81, -1));
 
         jButton4.setText("BACK");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -109,93 +126,35 @@ public class FileEncryption extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 229, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 111, 317, 20));
+        getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 343, 25));
+
+        getContentPane().add(watermark_templates, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 198, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Select water mark");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 201, -1, -1));
 
+        max_file_size_label.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        max_file_size_label.setForeground(new java.awt.Color(255, 255, 255));
         max_file_size_label.setText("100 kb");
+        getContentPane().add(max_file_size_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 166, 131, -1));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Selected file size");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 146, 164, -1));
 
+        selected_file_size_label.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        selected_file_size_label.setForeground(new java.awt.Color(255, 255, 255));
         selected_file_size_label.setText("0 kb");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(46, 46, 46)
-                                .addComponent(watermark_templates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(46, 46, 46)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(max_file_size_label, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(selected_file_size_label, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(progress_bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(add_watermark_button)
-                .addGap(33, 33, 33)
-                .addComponent(encrypt_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
-                .addGap(10, 10, 10)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(selected_file_size_label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(max_file_size_label))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(watermark_templates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(encrypt_button)
-                    .addComponent(add_watermark_button))
-                .addGap(18, 18, 18)
-                .addComponent(progress_bar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
+        getContentPane().add(selected_file_size_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 146, 131, -1));
+        getContentPane().add(main_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 380, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -206,22 +165,22 @@ public class FileEncryption extends javax.swing.JFrame {
         if (char_left < 0) {
             distortion = true;
         }
-        
+
         return distortion;
     }
-    
+
     private void loadWatermarkTemplates() {
         try {
             ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config");
             while (rs.next()) {
                 watermark_templates.addItem(rs.getString("template_name"));
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     private void encrypt_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encrypt_buttonActionPerformed
         // TODO add your handling code here:
         String password = new String(jPasswordField1.getPassword());
@@ -238,11 +197,13 @@ public class FileEncryption extends javax.swing.JFrame {
         } else {
             Dbcon dbcon = new Dbcon();
             dbcon.update("update tbl_encryption_log set encryption_start_time='" + System.currentTimeMillis() + "'where process_id='" + EmbedFile.process_id + "'");
-            dbcon.insert("insert into tbl_transfer_log(password)values('" + password + "')");
             enc_password = password;
-            
+
             File outPutCipherFile = new File(Configuration.masterPoolLocation + FilenameUtils.getBaseName(masterFile.getName()) + "_cipher." + FilenameUtils.getExtension(masterFile.getName()));
             if (Steganograph.embedFile(masterFile, outPutCipherFile, embedding_file, 50, password)) {
+                String sql = "update tbl_encryption_log set encryption_end_time='" + System.currentTimeMillis() + "' , cipher_file='"+outPutCipherFile.getName()+"' , cipher_file_size = '"+(outPutCipherFile.length()/1024)+"' where process_id='" + EmbedFile.process_id + "'";
+                System.out.println(sql);
+                dbcon.update(sql);
                 JOptionPane.showMessageDialog(rootPane, "Successfully embeded data");
                 this.dispose();
                 SendFile send = new SendFile(outPutCipherFile);
@@ -251,16 +212,16 @@ public class FileEncryption extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Could not embed, please try again after some time");
             }
         }
-        
+
     }//GEN-LAST:event_encrypt_buttonActionPerformed
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         this.dispose();
         EmbedFile embedFile = new EmbedFile();
         embedFile.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -281,7 +242,7 @@ public class FileEncryption extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private boolean addWaterMark() {
         boolean success = false;
         String waterMarkName = watermark_templates.getSelectedItem().toString();
@@ -295,7 +256,7 @@ public class FileEncryption extends javax.swing.JFrame {
                 String opacityString = rs.getString("opacity");
                 float opacity = Float.parseFloat(opacityString);
                 opacity = opacity / 100;
-                AddWaterMark.addNow(masterFile, font_family, Integer.parseInt(font_size), waterMarkName, opacity);
+                AddWaterMark.addNow(masterFile, font_family, Integer.parseInt(font_size), waterMarkName, opacity, font_color);
                 success = true;
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Watermark tempalte is corrupted!");
@@ -305,12 +266,12 @@ public class FileEncryption extends javax.swing.JFrame {
         }
         return success;
     }
-    
+
     private void add_watermark_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_watermark_buttonActionPerformed
         // TODO add your handling code here:
         Dbcon dbcon = new Dbcon();
         dbcon.update("update tbl_encryption_log set water_mark_start_time='" + System.currentTimeMillis() + "' where process_id='" + EmbedFile.process_id + "'");
-        
+
         if (addWaterMark()) {
             dbcon.update("update tbl_encryption_log set water_mark_end_time='" + System.currentTimeMillis() + "' where process_id='" + EmbedMessage.process_id + "'");
             waterMarkComplete();
@@ -319,7 +280,7 @@ public class FileEncryption extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Adding watermark failed. Please try again later");
         }
     }//GEN-LAST:event_add_watermark_buttonActionPerformed
-    
+
     private void waterMarkComplete() {
 //        progressBarThread.complete = true;
         progress_bar.setValue(100);
@@ -354,7 +315,7 @@ public class FileEncryption extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new FileEncryption().setVisible(true);
             }
@@ -372,6 +333,7 @@ public class FileEncryption extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel main_label;
     private javax.swing.JLabel max_file_size_label;
     private javax.swing.JProgressBar progress_bar;
     private javax.swing.JLabel selected_file_size_label;
