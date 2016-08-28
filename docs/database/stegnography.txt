@@ -34,7 +34,7 @@ CREATE TABLE `tbl_encryption_log` (
   `cipher_file_size` float DEFAULT NULL,
   `encryption_type` int(11) DEFAULT '0' COMMENT '0 - mesage, 1- file',
   PRIMARY KEY (`process_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_smtp_configuration` */
 
@@ -64,7 +64,7 @@ CREATE TABLE `tbl_transfer_log` (
   `is_send` tinyint(1) DEFAULT '1',
   `encrpypted_data` int(11) DEFAULT '0' COMMENT '0- Message , 1- File',
   PRIMARY KEY (`transfer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_user_details` */
 
@@ -83,7 +83,7 @@ CREATE TABLE `tbl_user_details` (
   `created_at` varchar(100) DEFAULT NULL,
   `last_updated_at` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_water_mark_config` */
 
@@ -98,7 +98,7 @@ CREATE TABLE `tbl_water_mark_config` (
   `font_color` varchar(50) DEFAULT NULL,
   `opacity` float DEFAULT NULL,
   PRIMARY KEY (`water_mark_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
