@@ -22,6 +22,7 @@ public class Configuration {
     public static String masterPoolLocation = "masterPool/";
     public static String retreivedFilePoolLocation = "retreivedFilePool/";
     public static String sendImageSubject = "Stegnography - Authenticated data ";
+    public static String sendPasswordSubject = "Stegnography - forgot password ";
 
     public static void initializeEnvironment() {
         try {
