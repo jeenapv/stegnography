@@ -241,8 +241,8 @@ public class Registration extends javax.swing.JFrame {
             int ins = dbcon.insert("insert into tbl_user_details(user_name,first_name,last_name,gender,date_of_birth,email_id,phone_number,password,created_at,last_updated_at)values('" + username + "','" + firstname + "','" + lastname + "','" + gender_male + "','" + selectedDate + "','" + email + "','" + phonenumber + "','" + password + "','" + System.currentTimeMillis() + "','" + System.currentTimeMillis() + "')");
             if (ins > 0) {
                 this.dispose();
-                Home home = new Home();
-                home.setVisible(true);
+                Login login = new Login();
+                login.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(rootPane, "try again");
             }
@@ -292,12 +292,12 @@ public class Registration extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Registration().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JButton jButton1;
