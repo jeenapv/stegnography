@@ -32,7 +32,7 @@ public class Home extends javax.swing.JFrame {
         Configuration.setIconOnLabel("help.png", jLabel13);
         Configuration.setIconOnLabel("lock.png", jLabel15);
         Configuration.setIconOnLabel("background.jpg", back_ground_label);
-        
+
     }
 
     /**
@@ -154,6 +154,9 @@ public class Home extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel13MouseEntered(evt);
             }
@@ -163,6 +166,9 @@ public class Home extends javax.swing.JFrame {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel15MouseEntered(evt);
             }
@@ -249,9 +255,19 @@ public class Home extends javax.swing.JFrame {
         jMenu3.setText("Settings");
 
         jMenuItem6.setText("Help");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("About");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem1.setText("Logout");
@@ -388,14 +404,14 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
         ConfigureWatermark configureWatermark = new ConfigureWatermark();
         configureWatermark.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
         EmbedMessage embedMessage = new EmbedMessage();
         embedMessage.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -416,7 +432,7 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
         RetrieveFile retrieveFile = new RetrieveFile();
         retrieveFile.setVisible(true);
     }//GEN-LAST:event_jLabel9MouseClicked
@@ -468,6 +484,33 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // TODO add your handling code here:
         main_label.setText("About Steganography");
     }//GEN-LAST:event_jLabel15MouseEntered
+
+private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+
+    this.dispose();
+    new Help().setVisible(true);
+}//GEN-LAST:event_jLabel13MouseClicked
+
+private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+
+    this.dispose();
+    new AboutUs().setVisible(true);
+    // TODO add your handling code here:
+}//GEN-LAST:event_jLabel15MouseClicked
+
+private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+
+    this.dispose();
+    new AboutUs().setVisible(true);
+    // TODO add your handling code here:
+}//GEN-LAST:event_jMenuItem7ActionPerformed
+
+private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+
+    this.dispose();
+    new Help().setVisible(true);
+    // TODO add your handling code here:
+}//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
