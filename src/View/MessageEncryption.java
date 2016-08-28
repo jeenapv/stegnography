@@ -26,6 +26,9 @@ public class MessageEncryption extends javax.swing.JFrame {
      * Creates new form Encryption
      */
     ProgressBarThread progressBarThread = new ProgressBarThread();
+    long max_data_size = 0;
+
+    ;
 
     public MessageEncryption() {
         initComponents();
@@ -41,6 +44,20 @@ public class MessageEncryption extends javax.swing.JFrame {
         loadWatermarkTemplates();
         encrypt_button.setEnabled(false);
         masterFile = new File(Configuration.masterPoolLocation + masterFileName);
+        max_data_size = Steganograph.getMaxAllowedDataSize(masterFile);
+        checkSizeLimit();
+    }
+
+    private boolean checkSizeLimit() {
+        boolean distortion = false;
+        long curentLength = secret_message.getText().length();
+        long char_left = max_data_size - curentLength;
+        if (char_left < 0) {
+            distortion = true;
+        }
+        characters_left_label.setText(char_left + "");
+
+        return distortion;
     }
 
     private void loadWatermarkTemplates() {
@@ -75,6 +92,7 @@ public class MessageEncryption extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         watermark_templates = new javax.swing.JComboBox();
         progress_bar = new javax.swing.JProgressBar();
+        characters_left_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,11 +100,17 @@ public class MessageEncryption extends javax.swing.JFrame {
 
         jLabel2.setText("Enter Message");
 
-        secret_message.setColumns(20);
+        secret_message.setColumns(1);
+        secret_message.setLineWrap(true);
         secret_message.setRows(5);
+        secret_message.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                secret_messageKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(secret_message);
 
-        jLabel3.setText("Characters left   :  20");
+        jLabel3.setText("Characters left   : ");
 
         jButton1.setText("Add Watermark");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +133,8 @@ public class MessageEncryption extends javax.swing.JFrame {
             }
         });
 
+        characters_left_label.setText("100");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,10 +148,13 @@ public class MessageEncryption extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(watermark_templates, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(password_field, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(password_field, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(characters_left_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(progress_bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -148,7 +177,9 @@ public class MessageEncryption extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(characters_left_label))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(watermark_templates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
@@ -175,6 +206,8 @@ public class MessageEncryption extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Password must be greater than or equal to 8");
         } else if (message.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter message");
+        } else if (checkSizeLimit()) {
+            JOptionPane.showMessageDialog(rootPane, "Please enter secret data less than maximum data size to avoid distortion");
         } else {
             Dbcon dbcon = new Dbcon();
             dbcon.update("update tbl_encryption_log set encryption_start_time='" + System.currentTimeMillis() + "'where process_id='" + EmbedMessage.process_id + "'");
@@ -233,14 +266,13 @@ public class MessageEncryption extends javax.swing.JFrame {
             progress_bar.setValue(0);
             int value = 0;
             float chunk = 100;
-            while (value < 100 && !complete) {
-                value = (int) (value + (chunk / 2));
-                chunk = chunk / 2;
+            while (value <= 100 && !complete) {
+                value++;
                 try {
                     Thread.sleep(500);
                 } catch (Exception e) {
                 }
-                progress_bar.setValue(value);
+                progress_bar.setValue(100);
             }
 
         }
@@ -261,6 +293,11 @@ public class MessageEncryption extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Adding watermark failed. Please try again later");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+private void secret_messageKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secret_messageKeyTyped
+    checkSizeLimit();
+    // TODO add your handling code here:
+}//GEN-LAST:event_secret_messageKeyTyped
 
     private void waterMarkComplete() {
         progressBarThread.complete = true;
@@ -303,6 +340,7 @@ public class MessageEncryption extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel characters_left_label;
     private javax.swing.JButton encrypt_button;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;

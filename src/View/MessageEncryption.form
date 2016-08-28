@@ -32,10 +32,14 @@
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel3" pref="158" max="32767" attributes="0"/>
                           <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                           <Component id="watermark_templates" alignment="0" max="32767" attributes="1"/>
                           <Component id="password_field" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="1">
+                              <Component id="jLabel3" min="-2" pref="107" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="characters_left_label" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -66,7 +70,10 @@
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="characters_left_label" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="watermark_templates" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -107,15 +114,19 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="secret_message">
           <Properties>
-            <Property name="columns" type="int" value="20"/>
+            <Property name="columns" type="int" value="1"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secret_messageKeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Characters left   :  20"/>
+        <Property name="text" type="java.lang.String" value="Characters left   : "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
@@ -150,6 +161,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JProgressBar" name="progress_bar">
+    </Component>
+    <Component class="javax.swing.JLabel" name="characters_left_label">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="100"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
