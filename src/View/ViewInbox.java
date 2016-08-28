@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import db.Dbcon;
@@ -22,6 +21,46 @@ public class ViewInbox extends javax.swing.JFrame {
     public ViewInbox() {
         initComponents();
         this.setLocationRelativeTo(null);
+        loadValuesToTable("");
+    }
+
+    private void clearTable() {
+        DefaultTableModel dm = (DefaultTableModel) file_table.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+    }
+
+    private void loadValuesToTable(String cipher_name) {
+        clearTable();
+        try {
+            String sql = "select * from tbl_transfer_log where receiver_id=" + Login.logged_in_user_id + " and cipher_file like '%" + cipher_name + "%'";
+            System.out.println(sql);
+            ResultSet rs = new Dbcon().select(sql);
+            DefaultTableModel model = (DefaultTableModel) file_table.getModel();
+            String arr[] = new String[5];
+            int count = 0;
+            while (rs.next()) {
+                String cipher_file = rs.getString("cipher_file");
+                String password = rs.getString("password");
+                String typeString = rs.getString("encrpypted_data");
+                int type = Integer.parseInt(typeString);
+                if (type == 0) {
+                    typeString = "Text";
+                } else {
+                    typeString = "File";
+                }
+
+                arr[0] = (++count) + "";
+                arr[1] = cipher_file;
+                arr[2] = password;
+                arr[3] = typeString;
+                model.addRow(arr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -34,10 +73,10 @@ public class ViewInbox extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        search_field = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        file_table = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,28 +88,40 @@ public class ViewInbox extends javax.swing.JFrame {
 
         jLabel1.setText("SEARCH");
 
+        search_field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search_fieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                search_fieldKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("INBOX");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        file_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Sl No", "File Name", "Password"
+                "Sl No", "File Name", "Password", "Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(file_table);
+        file_table.getColumnModel().getColumn(0).setMinWidth(50);
+        file_table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        file_table.getColumnModel().getColumn(0).setMaxWidth(50);
+        file_table.getColumnModel().getColumn(3).setMinWidth(100);
+        file_table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        file_table.getColumnModel().getColumn(3).setMaxWidth(100);
 
         jButton1.setText("BACK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -83,40 +134,40 @@ public class ViewInbox extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
+                .addGap(264, 264, 264)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(190, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(429, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(search_field, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel2)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(search_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         pack();
@@ -124,27 +175,36 @@ public class ViewInbox extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         this.dispose();
-        Home home=new Home();
+        this.dispose();
+        Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         // Dbcon dbcon = new Dbcon();
-       // DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+        // DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         //try {
-
         //    ResultSet rs = dbcon.select("select * from tbl_transfer_log order by transfer_id desc");
-         //   while (rs.next()) {
-          //      dt.addRow(new String[]{ rs.getString(1)});
-          //  }
-         //   jTable1.setModel(dt);
-
-       // } catch (Exception e) {
-          //  e.printStackTrace();
-      //  }
+        //   while (rs.next()) {
+        //      dt.addRow(new String[]{ rs.getString(1)});
+        //  }
+        //   jTable1.setModel(dt);
+        // } catch (Exception e) {
+        //  e.printStackTrace();
+        //  }
     }//GEN-LAST:event_formWindowOpened
+
+private void search_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_fieldKeyTyped
+
+    
+    // TODO add your handling code here:
+}//GEN-LAST:event_search_fieldKeyTyped
+
+private void search_fieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_fieldKeyReleased
+    loadValuesToTable(search_field.getText());
+    // TODO add your handling code here:
+}//GEN-LAST:event_search_fieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -175,18 +235,18 @@ public class ViewInbox extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new ViewInbox().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable file_table;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField search_field;
     // End of variables declaration//GEN-END:variables
 }
