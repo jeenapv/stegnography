@@ -7,6 +7,7 @@ package View;
 
 import db.Dbcon;
 import java.sql.ResultSet;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,6 +46,8 @@ public class ViewInbox extends javax.swing.JFrame {
                 String cipher_file = rs.getString("cipher_file");
                 String password = rs.getString("password");
                 String typeString = rs.getString("encrpypted_data");
+                String transfer_dateString = rs.getString("transfer_date");
+                long transfer_date = Long.parseLong(transfer_dateString);
                 int type = Integer.parseInt(typeString);
                 if (type == 0) {
                     typeString = "Text";
@@ -55,7 +58,9 @@ public class ViewInbox extends javax.swing.JFrame {
                 arr[0] = (++count) + "";
                 arr[1] = cipher_file;
                 arr[2] = password;
-                arr[3] = typeString;
+                arr[3] = new Date(transfer_date).toString();
+                arr[4] = typeString;
+                
                 model.addRow(arr);
             }
         } catch (Exception e) {
@@ -104,11 +109,11 @@ public class ViewInbox extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Sl No", "File Name", "Password", "Type"
+                "Sl No", "File Name", "Password", "Date", "Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -119,9 +124,9 @@ public class ViewInbox extends javax.swing.JFrame {
         file_table.getColumnModel().getColumn(0).setMinWidth(50);
         file_table.getColumnModel().getColumn(0).setPreferredWidth(50);
         file_table.getColumnModel().getColumn(0).setMaxWidth(50);
-        file_table.getColumnModel().getColumn(3).setMinWidth(100);
-        file_table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        file_table.getColumnModel().getColumn(3).setMaxWidth(100);
+        file_table.getColumnModel().getColumn(4).setMinWidth(100);
+        file_table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        file_table.getColumnModel().getColumn(4).setMaxWidth(100);
 
         jButton1.setText("BACK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -135,24 +140,22 @@ public class ViewInbox extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(264, 264, 264)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(429, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search_field, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap(510, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(search_field, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
