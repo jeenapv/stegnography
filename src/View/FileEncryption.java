@@ -39,9 +39,10 @@ public class FileEncryption extends javax.swing.JFrame {
     public FileEncryption(String masterFileName) {
         initComponents();
         this.setLocationRelativeTo(null);
-        encrypt_button.setEnabled(true);
         loadWatermarkTemplates();
         masterFile = new File(Configuration.masterPoolLocation + masterFileName);
+        add_watermark_button.setEnabled(false);
+        encrypt_button.setEnabled(false);
     }
 
     /**
@@ -131,8 +132,10 @@ public class FileEncryption extends javax.swing.JFrame {
                             .addComponent(watermark_templates, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                             .addComponent(jPasswordField1)
-                            .addComponent(jButton1)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -147,14 +150,14 @@ public class FileEncryption extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jButton1))
                 .addGap(10, 10, 10)
-                .addComponent(jLabel4)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(watermark_templates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(encrypt_button)
@@ -185,6 +188,8 @@ public class FileEncryption extends javax.swing.JFrame {
         String fileName = jLabel4.getText();
         if (password.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter password");
+        } else if (password.trim().length() < 8) {
+            JOptionPane.showMessageDialog(rootPane, "Password must be greater than or equal to 8");
         } else if (fileName.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Choose file to be encrypted");
         } else {
@@ -224,6 +229,7 @@ public class FileEncryption extends javax.swing.JFrame {
                 String name = chooser.getSelectedFile().getName();
                 jLabel4.setText(name);
                 embedding_file = file;
+                add_watermark_button.setEnabled(true);
             } catch (Exception ex) {
                 System.out.println("problem accessing file" + file.getAbsolutePath());
             }
