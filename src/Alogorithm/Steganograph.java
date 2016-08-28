@@ -447,7 +447,13 @@ public class Steganograph {
         long length = file.length();
         maxAllowedDataSize = length;
         return maxAllowedDataSize;
+    }
 
+    public static long getMaxAllowedFileSize(File file) {
+        long maxAllowedDataSize = 0;
+        long length = file.length() / 4;
+        maxAllowedDataSize = length;
+        return maxAllowedDataSize;
     }
 
     private static void embedBytes(byte[] bytes) {
