@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View;
 
 import General.Configuration;
@@ -16,7 +15,10 @@ import javax.swing.JOptionPane;
  * @author Jithinpv
  */
 public class Login extends javax.swing.JFrame {
-    public static int logged_in_user_id=1;
+
+    public static int logged_in_user_id = 1;
+    public static String first_name = "";
+
     /**
      * Creates new form Login
      */
@@ -25,7 +27,6 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("login.jpg", main_label);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,39 +105,38 @@ public class Login extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Registration registration=new Registration();
+        Registration registration = new Registration();
         registration.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        String userName=jTextField1.getText();
-        String password=new String(jPasswordField1.getPassword());
-        if(userName.equals(""))
-        {
+
+        String userName = jTextField1.getText();
+        String password = new String(jPasswordField1.getPassword());
+        if (userName.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Enter username");
-        }else if(password.equals("")){
-        
+        } else if (password.equals("")) {
+
             JOptionPane.showMessageDialog(rootPane, "Enter password");
-        }else{
-         Dbcon dbcon = new Dbcon();
-        ResultSet rs = dbcon.select("select * from tbl_user_details where user_name='"+userName+"' and password='"+password+"'");
-        try{
-            if(rs.next()){
-                String id=rs.getString("user_id");
-                logged_in_user_id= Integer.parseInt(id);
-                 this.dispose();
-                Home home=new Home();
-                home.setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Invalid Details");
+        } else {
+            Dbcon dbcon = new Dbcon();
+            ResultSet rs = dbcon.select("select * from tbl_user_details where user_name='" + userName + "' and password='" + password + "'");
+            try {
+                if (rs.next()) {
+                    String id = rs.getString("user_id");
+                    first_name = rs.getString("first_name");
+                    logged_in_user_id = Integer.parseInt(id);
+                    this.dispose();
+                    Home home = new Home();
+                    home.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Invalid Details");
+                }
+            } catch (Exception e) {
             }
-        }catch(Exception e){
-            
         }
-        }
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -176,12 +176,12 @@ private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Login().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

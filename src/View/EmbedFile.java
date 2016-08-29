@@ -74,7 +74,7 @@ public class EmbedFile extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select Master File");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 41, 154, -1));
@@ -98,7 +98,7 @@ public class EmbedFile extends javax.swing.JFrame {
         });
         getContentPane().add(analyze_master_file_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 199, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Embed File");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 11, 88, -1));
@@ -120,14 +120,14 @@ public class EmbedFile extends javax.swing.JFrame {
         });
         getContentPane().add(proceed_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
 
-        sucess_label.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        sucess_label.setFont(new java.awt.Font("Tahoma", 1, 14));
         sucess_label.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(sucess_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 187, 54, 49));
+        getContentPane().add(sucess_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 54, 49));
 
-        analyze_complete_label.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        analyze_complete_label.setFont(new java.awt.Font("Tahoma", 1, 14));
         analyze_complete_label.setForeground(new java.awt.Color(255, 255, 255));
         analyze_complete_label.setText("Analyse Complete");
-        getContentPane().add(analyze_complete_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 205, -1, -1));
+        getContentPane().add(analyze_complete_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, -1));
         getContentPane().add(progress_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 253, 322, 21));
 
         main_label.setText("jLabel3");

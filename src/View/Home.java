@@ -20,6 +20,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();
+        this.setTitle("Home - " + Login.first_name);
     }
 
     private void loadIcons() {
