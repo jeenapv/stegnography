@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,7 @@ public class ConfigureWatermark extends javax.swing.JFrame {
      * Creates new form ConfigureWatermark
      */
     public ConfigureWatermark() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("blue_background_calm.jpg", main_label);

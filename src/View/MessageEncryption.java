@@ -7,6 +7,7 @@ package View;
 
 import Alogorithm.Steganograph;
 import General.Configuration;
+import General.Nimbus;
 import WaterMark.AddWaterMark;
 import db.Dbcon;
 import java.io.File;
@@ -31,6 +32,7 @@ public class MessageEncryption extends javax.swing.JFrame {
     ;
 
     public MessageEncryption() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadWatermarkTemplates();
@@ -40,6 +42,7 @@ public class MessageEncryption extends javax.swing.JFrame {
     File masterFile = null;
 
     public MessageEncryption(String masterFileName) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadWatermarkTemplates();

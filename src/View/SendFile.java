@@ -7,6 +7,7 @@ package View;
 
 import Email.MailSender;
 import General.Configuration;
+import General.Nimbus;
 import General.ProgressBar;
 import db.Dbcon;
 import java.io.File;
@@ -23,6 +24,7 @@ public class SendFile extends javax.swing.JFrame {
      * Creates new form SendFile
      */
     public SendFile() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();
@@ -30,6 +32,7 @@ public class SendFile extends javax.swing.JFrame {
     File outputCipherFile;
 
     public SendFile(File outputCipherFile) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         receiver_name.setEditable(false);
         this.outputCipherFile = outputCipherFile;

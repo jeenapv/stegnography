@@ -8,6 +8,7 @@ package View;
 import Alogorithm.SteganoInformation;
 import Alogorithm.Steganograph;
 import General.Configuration;
+import General.Nimbus;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.io.File;
@@ -28,6 +29,7 @@ public class RetrieveFile extends javax.swing.JFrame {
     File retreivedFile;
 
     public RetrieveFile() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();

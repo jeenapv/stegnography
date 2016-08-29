@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.sql.ResultSet;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class ViewInbox extends javax.swing.JFrame {
      * Creates new form ViewInbox
      */
     public ViewInbox() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadValuesToTable("");

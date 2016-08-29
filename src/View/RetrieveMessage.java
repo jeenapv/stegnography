@@ -8,6 +8,7 @@ package View;
 import Alogorithm.SteganoInformation;
 import Alogorithm.Steganograph;
 import General.Configuration;
+import General.Nimbus;
 import java.awt.Component;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -25,6 +26,7 @@ public class RetrieveMessage extends javax.swing.JFrame {
     File cipherFile;
     
     public RetrieveMessage() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);

@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();

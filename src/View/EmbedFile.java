@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.awt.Component;
 import java.awt.Image;
@@ -34,6 +35,7 @@ public class EmbedFile extends javax.swing.JFrame {
      * Creates new form EmbedFile
      */
     public EmbedFile() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();

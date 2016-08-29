@@ -12,6 +12,7 @@ package View;
 
 import Email.MailSender;
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class ForgotPassword extends javax.swing.JFrame {
 
     /** Creates new form ForgotPassword */
     public ForgotPassword() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("login.jpg", main_label);

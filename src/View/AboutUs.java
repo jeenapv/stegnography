@@ -10,6 +10,8 @@
  */
 package View;
 
+import General.Nimbus;
+
 /**
  *
  * @author kakes
@@ -18,6 +20,7 @@ public class AboutUs extends javax.swing.JFrame {
 
     /** Creates new form AboutUs */
     public AboutUs() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
     }

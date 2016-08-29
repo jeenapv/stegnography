@@ -6,6 +6,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -35,6 +36,7 @@ public class EmbedMessage extends javax.swing.JFrame {
     String masterFileName;
 
     public EmbedMessage() {
+        Nimbus.loadLoogAndFeel();        
         initComponents();
         this.setLocationRelativeTo(null);
         loadIcons();

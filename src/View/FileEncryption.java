@@ -7,6 +7,7 @@ package View;
 
 import Alogorithm.Steganograph;
 import General.Configuration;
+import General.Nimbus;
 import WaterMark.AddWaterMark;
 import db.Dbcon;
 import java.awt.Color;
@@ -32,6 +33,7 @@ public class FileEncryption extends javax.swing.JFrame {
      * Creates new form FileEncryption
      */
     public FileEncryption() {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         encrypt_button.setEnabled(true);
@@ -40,6 +42,7 @@ public class FileEncryption extends javax.swing.JFrame {
     }
 
     public FileEncryption(String masterFileName) {
+        Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         loadWatermarkTemplates();

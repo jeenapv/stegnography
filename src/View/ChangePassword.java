@@ -7,6 +7,7 @@
 package View;
 
 import General.Configuration;
+import General.Nimbus;
 import db.Dbcon;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,7 @@ public class ChangePassword extends javax.swing.JFrame {
      */
     public ChangePassword() {
         initComponents();
+        Nimbus.loadLoogAndFeel();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
     }
