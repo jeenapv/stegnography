@@ -23,7 +23,7 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class FileEncryption extends javax.swing.JFrame {
 
-    public static String enc_password;
+    public static String encryption_password;
     File masterFile = null;
     File embedding_file = null;
     long max_allowed_file_size = 0;
@@ -197,7 +197,7 @@ public class FileEncryption extends javax.swing.JFrame {
         } else {
             Dbcon dbcon = new Dbcon();
             dbcon.update("update tbl_encryption_log set encryption_start_time='" + System.currentTimeMillis() + "'where process_id='" + EmbedFile.process_id + "'");
-            enc_password = password;
+            encryption_password = password;
 
             File outPutCipherFile = new File(Configuration.masterPoolLocation + FilenameUtils.getBaseName(masterFile.getName()) + "_cipher." + FilenameUtils.getExtension(masterFile.getName()));
             if (Steganograph.embedFile(masterFile, outPutCipherFile, embedding_file, 50, password)) {

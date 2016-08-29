@@ -187,7 +187,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
                 MailSender.sendFromGMail(recepients, Configuration.sendImageSubject + " " + System.currentTimeMillis(), "Data from particular user", outputCipherFile.getPath());
                 progressBarThread.complete = true;
-                int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password,encrpypted_data,cipher_file) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + MessageEncryption.encryption_password + "',1,'" + outputCipherFile.getName() + "')");
+                int ins = dbcon.insert("insert into tbl_transfer_log (sender_id, receiver_id, transfer_date, password,encrpypted_data,cipher_file) values (" + Login.logged_in_user_id + " , " + receiver_id + " , '" + System.currentTimeMillis() + "' , '" + FileEncryption.encryption_password + "',1,'" + outputCipherFile.getName() + "')");
                 System.out.println("Insert transfer log table status " + ins);
 //                dbcon.update("update tbl_transfer_log set sender_id='" + Login.logged_in_user_id + "',receiver_id='" + receiver_id + "',transfer_date='" + System.currentTimeMillis() + "',is_send=1 where password='" + MessageEncryption.encryption_password + "'");
                 JOptionPane.showMessageDialog(rootPane, "success");
