@@ -5,7 +5,12 @@
 package Email;
 
 import General.Configuration;
+import db.Dbcon;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -29,33 +34,58 @@ public class MailSender {
     /**
      * @param args the command line arguments
      */
-    private static String USER_NAME = "stegnographyuc@gmail.com";
-    private static String PASSWORD = "stegnographyuc123";
+    private static String USER_NAME = "";
+    private static String PASSWORD = "";
 //    private static String RECIPIENT = "krishh_mea@yahoo.in";
-    private static String RECIPIENT = "krishh.mea@gmail.com";
+    private static String RECIPIENT = "";
+     private static String host="";
 
     public static void main(String[] args) {
         // TODO code application logic here
         String from = USER_NAME;
         String pass = PASSWORD;
+        
         String[] to = {RECIPIENT}; // list of recipient email addresses
-        String subject = "Stegnography sample - "+System.currentTimeMillis();
+        String subject = "Stegnography sample - " + System.currentTimeMillis();
         String body = "Welcome to JavaMail!";
 
-        sendFromGMail(to, subject, body,(Configuration.masterPoolLocation + "1472148308713_cipher.jpg"));
+        sendFromGMail(to, subject, body, (Configuration.masterPoolLocation + "1472148308713_cipher.jpg"));
     }
 
     public static void sendFromGMail(String[] to, String subject, String body) {
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", USER_NAME);
-        props.put("mail.smtp.password", PASSWORD);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
+      
+        //props.put("mail.smtp.starttls.enable", "true");
+        // props.put("mail.smtp.host", host);
+        // props.put("mail.smtp.user", USER_NAME);
+        //props.put("mail.smtp.password", PASSWORD);
+        // props.put("mail.smtp.port", "587");
+        // props.put("mail.smtp.auth", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        Dbcon dbcon = new Dbcon();
+        // dbcon.insert("insert into tbl_smtp_configuration()values()");
+        ResultSet rs = dbcon.select("select * from tbl_smtp_configuration");
+        try {
+            if (rs.next()) {
+                USER_NAME = rs.getString("sender_email_id");
+                PASSWORD = rs.getString("sender_passsword");
+                String Subjects = rs.getString("subject") + "-" + System.currentTimeMillis();
+                String smtpHost = rs.getString("smtp_host");
+                String smtpPort = rs.getString("smtp_port");
+                String trustSsl = rs.getString("smtp_trust_ssl");
+                String smtp_auth = rs.getString("smtp_auth");
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.host", smtpHost);
+                props.put("mail.smtp.user", USER_NAME);
+                props.put("mail.smtp.password", PASSWORD);
+                props.put("mail.smtp.port", smtpPort);
+                props.put("mail.smtp.auth", smtp_auth);
+                props.put("mail.smtp.ssl.trust", trustSsl);
+                host = smtpHost;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
 
@@ -89,17 +119,42 @@ public class MailSender {
             me.printStackTrace();
         }
     }
-    
+
     public static void sendFromGMail(String[] to, String subject, String body, String filePath) {
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", USER_NAME);
-        props.put("mail.smtp.password", PASSWORD);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+       
+        Dbcon dbcon = new Dbcon();
+        ResultSet rs = dbcon.select("select * from tbl_smtp_configuration");
+        try {
+            if (rs.next()) {
+                USER_NAME = rs.getString("sender_email_id");
+                PASSWORD = rs.getString("sender_passsword");
+                String Subjects = rs.getString("subject") + "-" + System.currentTimeMillis();
+                String smtpHost = rs.getString("smtp_host");
+                String smtpPort = rs.getString("smtp_port");
+                String trustSsl = rs.getString("smtp_trust_ssl");
+                String smtp_auth = rs.getString("smtp_auth");
+                host = smtpHost;
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.host", smtpHost);
+                props.put("mail.smtp.user", USER_NAME);
+                props.put("mail.smtp.password", PASSWORD);
+                props.put("mail.smtp.port", smtpPort);
+                props.put("mail.smtp.auth", smtp_auth);
+                props.put("mail.smtp.ssl.trust", trustSsl);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        //String host = "smtp.gmail.com";
+        // props.put("mail.smtp.starttls.enable", "true");
+        // props.put("mail.smtp.host", host);
+        // props.put("mail.smtp.user", USER_NAME);
+        // props.put("mail.smtp.password", PASSWORD);
+        // props.put("mail.smtp.port", "587");
+        // props.put("mail.smtp.auth", "true");
+        // props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);
@@ -130,7 +185,7 @@ public class MailSender {
             messageBodyPart.setFileName(filePath);
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
-            
+
             System.out.println("Sending.............");
 
             Transport transport = session.getTransport("smtp");

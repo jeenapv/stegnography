@@ -69,7 +69,7 @@ public class MessageEncryption extends javax.swing.JFrame {
         try {
             ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config");
             while (rs.next()) {
-                watermark_templates.addItem(rs.getString("template_name"));
+                watermark_templates.addItem(rs.getString("title"));
             }
 
         } catch (Exception e) {
@@ -208,10 +208,10 @@ public class MessageEncryption extends javax.swing.JFrame {
     private boolean addWaterMark() {
         boolean success = false;
         String waterMarkName = watermark_templates.getSelectedItem().toString();
-        ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config where template_name = '" + waterMarkName + "'");
+        ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config where title = '" + waterMarkName + "'");
         try {
             if (rs.next()) {
-                String title = rs.getString("title");
+                String template = rs.getString("template_name");
                 String font_family = rs.getString("font_family");
                 String font_size = rs.getString("font_size");
                 String font_color = rs.getString("font_color");
