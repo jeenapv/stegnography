@@ -113,7 +113,7 @@ public class ViewWaterMark extends javax.swing.JFrame {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         try {
 
-            ResultSet rs = dbcon.select("select * from tbl_water_mark_config order by water_mark_id asc");
+            ResultSet rs = dbcon.select("select * from tbl_water_mark_config where user_id='"+Login.logged_in_user_id+"' order by water_mark_id asc ");
             while (rs.next()) {
                 dt.addRow(new String[]{ rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
             }

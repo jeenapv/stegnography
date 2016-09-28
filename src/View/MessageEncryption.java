@@ -67,7 +67,7 @@ public class MessageEncryption extends javax.swing.JFrame {
 
     private void loadWatermarkTemplates() {
         try {
-            ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config");
+            ResultSet rs = new Dbcon().select("select * from tbl_water_mark_config where user_id='"+Login.logged_in_user_id+"'");
             while (rs.next()) {
                 watermark_templates.addItem(rs.getString("title"));
             }

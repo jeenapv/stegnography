@@ -147,7 +147,7 @@ public class ConfigureWatermark extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Enter template name");
         } else {
             Dbcon dbcon = new Dbcon();
-            int ins = dbcon.insert("insert into tbl_water_mark_config(template_name,title,font_family,font_size,font_color,opacity)values('" + template + "','" + title + "','" + family + "','" + size + "','" + color + "','" + opacity + "')");
+            int ins = dbcon.insert("insert into tbl_water_mark_config(template_name,title,font_family,font_size,font_color,opacity,user_id)values('" + template + "','" + title + "','" + family + "','" + size + "','" + color + "','" + opacity + "','"+Login.logged_in_user_id+"')");
             if (ins > 0) {
                 JOptionPane.showMessageDialog(rootPane, "Sucessfully added template : " + template);
                 ViewWaterMark viewWaterMark = new ViewWaterMark();

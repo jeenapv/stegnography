@@ -1,6 +1,6 @@
 /*
-SQLyog Community v11.24 (32 bit)
-MySQL - 5.5.8 : Database - stegnography
+SQLyog Community Edition- MySQL GUI v8.03 
+MySQL - 5.1.32-community : Database - stegnography
 *********************************************************************
 */
 
@@ -8,9 +8,9 @@ MySQL - 5.5.8 : Database - stegnography
 
 /*!40101 SET SQL_MODE=''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`stegnography` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `stegnography`;
@@ -34,7 +34,7 @@ CREATE TABLE `tbl_encryption_log` (
   `cipher_file_size` float DEFAULT NULL,
   `encryption_type` int(11) DEFAULT '0' COMMENT '0 - mesage, 1- file',
   PRIMARY KEY (`process_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_smtp_configuration` */
 
@@ -64,7 +64,7 @@ CREATE TABLE `tbl_transfer_log` (
   `is_send` tinyint(1) DEFAULT '1',
   `encrpypted_data` int(11) DEFAULT '0' COMMENT '0- Message , 1- File',
   PRIMARY KEY (`transfer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_user_details` */
 
@@ -83,7 +83,7 @@ CREATE TABLE `tbl_user_details` (
   `created_at` varchar(100) DEFAULT NULL,
   `last_updated_at` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `tbl_water_mark_config` */
 
@@ -97,9 +97,9 @@ CREATE TABLE `tbl_water_mark_config` (
   `font_size` int(11) DEFAULT NULL,
   `font_color` varchar(50) DEFAULT NULL,
   `opacity` float DEFAULT NULL,
+  `user_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`water_mark_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

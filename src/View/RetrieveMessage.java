@@ -24,12 +24,14 @@ public class RetrieveMessage extends javax.swing.JFrame {
      * Creates new form RetrieveMessage
      */
     File cipherFile;
-    
+
     public RetrieveMessage() {
         Nimbus.loadLoogAndFeel();
         initComponents();
         this.setLocationRelativeTo(null);
         Configuration.setIconOnLabel("blue_back_ground.jpg", main_label);
+        hideItems();
+
     }
 
     /**
@@ -104,14 +106,19 @@ public class RetrieveMessage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private void hideItems() {
+        embeded_data.setVisible(false);
+        jLabel2.setVisible(false);
+        jPasswordField1.setVisible(false);
+        jButton2.setVisible(false);
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
         Home home = new Home();
         home.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String fileName = jLabel3.getText();
@@ -135,7 +142,8 @@ public class RetrieveMessage extends javax.swing.JFrame {
                     String data = Steganograph.retrieveMessage(steganoInformation, password);
                     System.out.println(data);
                     embeded_data.setText(data);
-                    
+                    embeded_data.setVisible(true);
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, "Sorry, wrong password");
                     //e.printStackTrace();
@@ -143,11 +151,11 @@ public class RetrieveMessage extends javax.swing.JFrame {
 
                 //new PreRetrieveGUI(steg, PreRetrieveGUI.RETRIEVE_MESSAGE);
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
@@ -158,7 +166,11 @@ public class RetrieveMessage extends javax.swing.JFrame {
             try {
                 String fileName = file.toString();
                 String name = chooser.getSelectedFile().getName();
+                jLabel2.setVisible(true);
+                jPasswordField1.setVisible(true);
+                jButton2.setVisible(true);
                 jLabel3.setText(name);
+
             } catch (Exception ex) {
                 System.out.println("problem accessing file" + file.getAbsolutePath());
             }
@@ -196,7 +208,7 @@ public class RetrieveMessage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new RetrieveMessage().setVisible(true);
             }
