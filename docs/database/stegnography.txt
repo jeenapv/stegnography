@@ -34,7 +34,9 @@ CREATE TABLE `tbl_encryption_log` (
   `cipher_file_size` float DEFAULT NULL,
   `encryption_type` int(11) DEFAULT '0' COMMENT '0 - mesage, 1- file',
   PRIMARY KEY (`process_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_encryption_log` */
 
 /*Table structure for table `tbl_smtp_configuration` */
 
@@ -50,6 +52,10 @@ CREATE TABLE `tbl_smtp_configuration` (
   `smtp_auth` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `tbl_smtp_configuration` */
+
+insert  into `tbl_smtp_configuration`(`sender_email_id`,`sender_passsword`,`subject`,`smtp_host`,`smtp_port`,`smtp_trust_ssl`,`smtp_auth`) values ('stegnographyuc@gmail.com','stegnographyuc123','Stegnography sample','smtp.gmail.com',587,'smtp.gmail.com',0);
+
 /*Table structure for table `tbl_transfer_log` */
 
 DROP TABLE IF EXISTS `tbl_transfer_log`;
@@ -64,7 +70,9 @@ CREATE TABLE `tbl_transfer_log` (
   `is_send` tinyint(1) DEFAULT '1',
   `encrpypted_data` int(11) DEFAULT '0' COMMENT '0- Message , 1- File',
   PRIMARY KEY (`transfer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_transfer_log` */
 
 /*Table structure for table `tbl_user_details` */
 
@@ -83,7 +91,9 @@ CREATE TABLE `tbl_user_details` (
   `created_at` varchar(100) DEFAULT NULL,
   `last_updated_at` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_user_details` */
 
 /*Table structure for table `tbl_water_mark_config` */
 
@@ -99,7 +109,9 @@ CREATE TABLE `tbl_water_mark_config` (
   `opacity` float DEFAULT NULL,
   `user_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`water_mark_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tbl_water_mark_config` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
